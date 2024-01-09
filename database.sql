@@ -1,0 +1,9 @@
+CREATE DATABASE IF NOT EXISTS notes_database;
+
+USE notes_database;
+
+CREATE TABLE IF NOT EXISTS notes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    category VARCHAR(255) NOT NULL,
+    content TEXT NOT NULL
+);
