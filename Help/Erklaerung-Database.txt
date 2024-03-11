@@ -1,0 +1,87 @@
+Um einen neuen Benutzer zu erstellen, eine neue ToDo-Liste zu erstellen, eine neue ToDo hinzuzufügen und die ToDo-Liste zu teilen, benötigst du entsprechende INSERT-Anweisungen. Hier sind Beispiele für diese Anweisungen basierend auf der vorherigen Datenbankstruktur:
+
+1. **Neuen Benutzer erstellen:**
+   ```sql
+   INSERT INTO Users (Username, dtPassword) VALUES ('NeuerBenutzer', 'Passwort123');
+   ```
+   Hierbei ist 'NeuerBenutzer' der gewünschte Benutzername und 'Passwort123' das zugehörige Passwort. Stelle sicher, dass du starke Verschlüsselung und sichere Praktiken für die Passwortverwaltung verwendest, um die Sicherheit deiner Benutzerdaten zu gewährleisten.
+
+2. **Neue ToDo-Liste erstellen:**
+   ```sql
+   INSERT INTO ToDoLists (ListName) VALUES ('Einkaufsliste');
+   ```
+   Ersetze `'Einkaufsliste'` durch den Namen deiner ToDo-Liste.
+
+3. **Neue ToDo hinzufügen:**
+   ```sql
+   -- Angenommen, die ListID der Einkaufsliste ist 1
+   INSERT INTO ToDos (ListID, Task) VALUES (1, 'Milch kaufen');
+   ```
+   Ersetze `1` durch die tatsächliche ListID deiner ToDo-Liste und `'Milch kaufen'` durch den Task für die ToDo.
+
+4. **ToDo-Liste teilen:**
+   ```sql
+   -- Angenommen, die UserID des neuen Benutzers ist 1 und die ListID der Einkaufsliste ist 1
+   INSERT INTO UserToDoLists (UserID, ListID) VALUES (1, 1);
+   ```
+   Ersetze `1` durch die tatsächlichen UserID und ListID.
+
+Diese Beispiele gehen davon aus, dass du bereits einen Benutzer erstellt hast und die IDs der ToDo-Liste sowie des Benutzers kennst. Stelle sicher, dass du diese Informationen an deine tatsächlichen Daten anpasst.
+
+
+Verstanden, du möchtest, dass mehrere Benutzer auf eine ToDo-Liste zugreifen können. In diesem Fall benötigst du eine zusätzliche Tabelle, um die vielen-zu-vielen Beziehung zwischen Benutzern und ToDo-Listen zu repräsentieren. Hier ist eine angepasste Struktur:
+
+1. **Users-Tabelle:**
+   - `UserID` (Primärschlüssel)
+   - `Username`
+   - Andere benutzerbezogene Informationen
+
+2. **ToDoLists-Tabelle:**
+   - `ListID` (Primärschlüssel)
+   - `ListName`
+   - Andere listenbezogene Informationen
+
+3. **UserToDoLists-Tabelle (Für die vielen-zu-vielen Beziehung):**
+   - `ID` (Primärschlüssel)
+   - `UserID` (Fremdschlüssel zu `Users.UserID`)
+   - `ListID` (Fremdschlüssel zu `ToDoLists.ListID`)
+
+4. **ToDos-Tabelle:**
+   - `TodoID` (Primärschlüssel)
+   - `ListID` (Fremdschlüssel zu `ToDoLists.ListID`)
+   - `Task`
+   - Andere todo-bezogene Informationen
+
+Hier sind die SQL-Anweisungen für diese Struktur:
+
+```sql
+CREATE TABLE Users (
+    UserID INT PRIMARY KEY AUTO_INCREMENT,
+    Username VARCHAR(50) NOT NULL
+    -- Andere benutzerbezogene Informationen
+);
+
+CREATE TABLE ToDoLists (
+    ListID INT PRIMARY KEY AUTO_INCREMENT,
+    ListName VARCHAR(50) NOT NULL
+    -- Andere listenbezogene Informationen
+);
+
+CREATE TABLE UserToDoLists (
+    ID INT PRIMARY KEY AUTO_INCREMENT,
+    UserID INT,
+    ListID INT,
+    FOREIGN KEY (UserID) REFERENCES Users(UserID),
+    FOREIGN KEY (ListID) REFERENCES ToDoLists(ListID)
+);
+
+CREATE TABLE ToDos (
+    TodoID INT PRIMARY KEY AUTO_INCREMENT,
+    ListID INT,
+    Task VARCHAR(255) NOT NULL,
+    FOREIGN KEY (ListID) REFERENCES ToDoLists(ListID)
+    -- Andere todo-bezogene Informationen
+);
+```
+
+Mit dieser Struktur können Benutzer über die `UserToDoLists`-Tabelle mehreren ToDo-Listen zugeordnet werden. Wenn ein Benutzer Zugriff auf eine bestimmte ToDo-Liste haben soll, füge einen Eintrag in die `UserToDoLists`-Tabelle ein. So kann die Struktur viele Benutzer pro ToDo-Liste und viele ToDo-Listen pro Benutzer unterstützen.
