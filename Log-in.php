@@ -2,7 +2,7 @@
 <html>
 
 <head>
-    <title id="pageTitle">Sign Up to TodoPlus</title>
+    <title id="pageTitle">Log In to TodoPlus</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
@@ -26,7 +26,7 @@
             <div class="content">
                 <header>
                     <p>Willkommen<br>
-                        Finden sie heraus was wir mit unserer Website machen</p>
+                        Geben sie uns hier eure Daten.</p>
                 </header>
                 <ul class="actions">
                     <li><a href="right-sidebar.html" class="button">Submit</a></li>
