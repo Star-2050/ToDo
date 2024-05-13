@@ -1,12 +1,19 @@
 <?php
 
+/**
+ * Stellt eine Verbindung zur Datenbank her.
+ * 
+ * @return mysqli Eine Verbindungskennung, die von mysqli_connect zurückgegeben wird.
+ */
 function Connect()
 {
+    // Datenbankverbindungseinstellungen
     $hostname = '89.58.47.144';
     $username = 'ToDoPlusUser';
     $password = 'todopluspw';
     $dbname = 'dbToDoPlus';
 
+    // Verbindungsaufbau
     $connection = mysqli_connect($hostname, $username, $password, $dbname);
     if (!$connection)
     {
@@ -15,6 +22,11 @@ function Connect()
     return $connection;
 }
 
+/**
+ * Fügt eine neue To-Do-Liste in die Datenbank ein.
+ * 
+ * @param string $listName Der Name der To-Do-Liste.
+ */
 function ToDoListAdd($listName)
 {
     $connection = Connect();
@@ -25,6 +37,11 @@ function ToDoListAdd($listName)
     mysqli_close($connection);
 }
 
+/**
+ * Löscht eine To-Do-Liste aus der Datenbank.
+ * 
+ * @param int $listID Die ID der zu löschenden Liste.
+ */
 function ToDoListDelete($listID)
 {
     $connection = Connect();
@@ -35,6 +52,12 @@ function ToDoListDelete($listID)
     mysqli_close($connection);
 }
 
+/**
+ * Fügt ein To-Do in die Datenbank ein.
+ * 
+ * @param int $listID Die ID der Liste, zu der das To-Do hinzugefügt wird.
+ * @param string $task Die Beschreibung des To-Do.
+ */
 function ToDoAdd($listID, $task)
 {
     $connection = Connect();
@@ -45,6 +68,11 @@ function ToDoAdd($listID, $task)
     mysqli_close($connection);
 }
 
+/**
+ * Löscht ein To-Do aus der Datenbank.
+ * 
+ * @param int $todoID Die ID des zu löschenden To-Do.
+ */
 function ToDoDelete($todoID)
 {
     $connection = Connect();
@@ -55,9 +83,16 @@ function ToDoDelete($todoID)
     mysqli_close($connection);
 }
 
+/**
+ * Fügt einen neuen Benutzer in die Datenbank ein.
+ * 
+ * @param string $username Der Benutzername des neuen Benutzers.
+ * @param string $password Das Passwort des neuen Benutzers.
+ */
 function UserAdd($username, $password)
 {
     $connection = Connect();
+    // Passwort wird gehasht, um es sicher in der Datenbank zu speichern.
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt = mysqli_prepare($connection, "INSERT INTO Users (Username, Password) VALUES (?, ?)");
     mysqli_stmt_bind_param($stmt, 'ss', $username, $hashedPassword);
@@ -66,6 +101,11 @@ function UserAdd($username, $password)
     mysqli_close($connection);
 }
 
+/**
+ * Löscht einen Benutzer aus der Datenbank.
+ * 
+ * @param int $userID Die ID des zu löschenden Benutzers.
+ */
 function UserDelete($userID)
 {
     $connection = Connect();
@@ -76,6 +116,12 @@ function UserDelete($userID)
     mysqli_close($connection);
 }
 
+/**
+ * Überprüft, ob ein Benutzername in der Datenbank existiert.
+ * 
+ * @param string $username Der zu überprüfende Benutzername.
+ * @return bool Wahr, wenn der Benutzername existiert, sonst falsch.
+ */
 function UsernameExist($username)
 {
     $connection = Connect();
@@ -89,10 +135,16 @@ function UsernameExist($username)
     return $exists;
 }
 
+/**
+ * Authentifiziert einen Benutzer basierend auf Benutzername/Email und Passwort.
+ * 
+ * @param string $usernameOrEmail Der Benutzername oder die E-Mail-Adresse des Benutzers.
+ * @param string $password Das Passwort des Benutzers.
+ * @return bool Wahr, wenn die Authentifizierung erfolgreich ist, sonst falsch.
+ */
 function AuthenticateUser($usernameOrEmail, $password)
 {
     $connection = Connect();
-    // Die Verwendung von Prepared Statements schützt gegen SQL-Injection
     $stmt = mysqli_prepare($connection, "SELECT Password FROM Users WHERE Username = ? OR Email = ?");
     mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
     mysqli_stmt_execute($stmt);
@@ -100,7 +152,6 @@ function AuthenticateUser($usernameOrEmail, $password)
 
     if ($row = mysqli_fetch_assoc($result))
     {
-        // Überprüfe, ob das Passwort mit dem gehashten Passwort in der Datenbank übereinstimmt
         if (password_verify($password, $row['Password']))
         {
             mysqli_stmt_close($stmt);
