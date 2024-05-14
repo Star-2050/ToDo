@@ -6,83 +6,37 @@
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
-
-    <style>
-        /* Stil für die zentrierte Ausrichtung des Formulars */
-        #signup-form {
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            height: 100vh;
-        }
-
-        /* Stil für die Textfelder */
-        input[type="email"],
-        input[type="password"] {
-            width: 100%;
-            padding: 10px;
-            margin: 5px 0;
-            border: 1px solid #ccc;
-            border-radius: 4px;
-            box-sizing: border-box;
-        }
-    </style>
-
+    <link rel="stylesheet" href="assets/css/signup-login.css" />
 </head>
 
 <body class="is-preload">
     <div id="page-wrapper">
-
         <!-- Header -->
         <header id="header">
             <h1 id="logo"><a href="index.html">TodoPlus</a></h1>
             <nav id="nav">
                 <ul>
-                    <li><a href="index.html">Back to Website</a>
-                    </li>
+                    <li><a href="index.html">Back to Website</a></li>
                 </ul>
             </nav>
         </header>
-
-
         <!-- Banner -->
         <section id="banner">
             <div class="content">
-                <form id="signup-form" action="right-sidebar.html" method="post">
-
+                <form id="signup-form" action="PHP/signup.php" method="post">
                     <h2>Willkommen</h2>
-
                     <span class="image"><img src="images/pic01.png" alt="" /></span>
-                  
-                    <input type="text" name="email" placeholder="E-Mail / Username" required>
-
-                    <input type="password" name="password" placeholder="Passwort" required>
+                    <input type="text" name="username" placeholder="Username" required>
+                    <input type="text" name="email" placeholder="E-Mail" required>
+                    <input type="password" name="password-1" placeholder="Passwort" required>
+                    <input type="password" name="password-2" placeholder="Passwort" required>
                     <ul class="actions">
                         <li><button type="submit" class="button">Submit</button></li>
                     </ul>
-                
                 </form>
-
             </div>
-
         </section>
-
-        <!--<span class="image"><img src="images/pic01.png" alt="" /></span>-->
-
-
-        <!--<section id="banner">
-            <div class="content">
-                <header>
-                    <p>Willkommen<br>
-                        Finden sie heraus was wir mit unserer Website machen</p>
-                </header>
-                <ul class="actions">
-                    <li><a href="right-sidebar.html" class="button">Submit</a></li>
-                </ul>
-            </div>
-        </section>-->
-
     </div>
+</body>
 
 </html>
