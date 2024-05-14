@@ -17,16 +17,20 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             // Add new user to the database
             UserAdd($username, $password1, $email);
-            echo "Neuer User erstellt";
+            header('Location: ../ToDoPlus.html');
+            exit();
         }
         else
         {
-            echo "Benutzername existiert bereits";
+            header('Location: ../Sign-up.html');
+            exit();
         }
     }
     else
     {
         echo "Passwörter stimmen nicht überein";
+        header('Location: ../Sign-up.html');
+        exit();
     }
 
 }

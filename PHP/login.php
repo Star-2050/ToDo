@@ -1,5 +1,4 @@
-<?
-
+<?php
 include 'functions.php';
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
@@ -11,15 +10,17 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     // Authenticate user
     if (AuthenticateUser($emailOrUsername, $password))
     {
-        echo "Login erfolgreich!";
-        // Weiterleitung oder Session-Management hier einfügen
+        // Redirect to the ToDoPlus page
+        header('Location: ../ToDoPlus.html');
+        exit();
     }
     else
     {
-        echo "Ungültige Anmeldeinformationen. Bitte versuchen Sie es erneut.";
+        // Redirect to the login page
+        header('Location: ../login.html');
+        exit();
     }
 }
-
 
 /**
  * Stellt eine Verbindung zur Datenbank her.
