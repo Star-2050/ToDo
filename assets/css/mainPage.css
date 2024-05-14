@@ -18,20 +18,20 @@ body, html {
     padding: 20px;
 }
 
-.menu {
+/*.menu {
     list-style: none;
     padding: 0;
 }
-
+*/
 .menu-item {
     padding: 10px;
     border-bottom: 1px solid #444;
 }
-
+/*
 .menu-item.active, .menu-item:hover {
     background-color: #333;
 }
-
+*/
 .task-list {
     background: #222;
     padding: 15px;
@@ -65,3 +65,18 @@ body, html {
 .add-task:hover {
     background-color: #555;
 }
+/*Alessandro*/
+.btn-bd-primary {
+    background-color: #712cf9; /* Violet */
+    color: rgb(14, 202, 149); /* Texte blanc */
+    border-color: #b40021; /* Bordure violette */
+}
+.menu-item.active.btn-bd-primary:hover {
+color: red; /* Rouge lorsque survolé */
+}
+
+
+.btn-bd-primary:hover .time {
+    color: red; /* Rouge lorsque survolé */
+}
+/*Alessandro*/
