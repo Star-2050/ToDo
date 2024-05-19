@@ -1,16 +1,7 @@
 <?php
 include 'functions.php';
 
-
-
-
-
-
-
-
-
-
-/**
+/*
  * Stellt eine Verbindung zur Datenbank her.
  * 
  * @return mysqli Eine Verbindungskennung, die von mysqli_connect zurückgegeben wird.
@@ -32,7 +23,7 @@ function Connect()
     return $connection;
 }
 
-/**
+/*
  * Fügt eine neue To-Do-Liste in die Datenbank ein.
  * 
  * @param string $listName Der Name der To-Do-Liste.
@@ -95,6 +86,8 @@ function ToDoDelete($todoID)
 
 
 
+
+
 /**
  * Löscht einen Benutzer aus der Datenbank.
  * 
@@ -109,3 +102,48 @@ function UserDelete($userID)
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
 }
+
+function GetUserToDoLists($userID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "SELECT t.ListID, t.ListName FROM ToDoLists t JOIN UserToDoLists utl ON t.ListID = utl.ListID WHERE utl.UserID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $lists = [];
+    while ($row = mysqli_fetch_assoc($result))
+    {
+        $lists[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $lists;
+}
+
+
+function GetToDosFromUserList($userID, $listID)
+{
+    $connection = Connect();
+    // Bereite die SQL-Anfrage vor, die sowohl die UserID als auch die ListID berücksichtigt
+    $stmt = mysqli_prepare($connection, "SELECT td.TodoID, td.Task FROM ToDos td INNER JOIN UserToDoLists utl ON td.ListID = utl.ListID WHERE utl.UserID = ? AND td.ListID = ?");
+    mysqli_stmt_bind_param($stmt, 'ii', $userID, $listID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $todos = [];
+    while ($row = mysqli_fetch_assoc($result))
+    {
+        $todos[] = $row; // Speichere jede To-Do in einem Array
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $todos;
+}
+
+
+
