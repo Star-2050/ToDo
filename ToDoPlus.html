@@ -9,6 +9,7 @@
     <link rel="stylesheet" href="assets/css/todo.css" />
     <!-- jQuery einbinden -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/todo.js"></script>
 </head>
 
 <body>
@@ -40,26 +41,16 @@
         </section>
     </div>
 
-    <script>
-        $(document).ready(function () {
-            function loadTodos() {
-                $.ajax({
-                    url: "PHP/get_todos.php",
-                    method: "POST",
-                    success: function (data) {
-                        $("#todo-container").html(data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        alert("An error occurred while fetching the to-dos.");
-                    }
-                });
-            }
+    <button id="addButton">+</button>
 
-            // Load todos on page load
-            loadTodos();
-        });
-    </script>
+    <div id="newTodoForm">
+        <h3>Neues To-Do</h3>
+        <input type="text" id="newTodoTitle" placeholder="Titel" />
+        <textarea id="newTodoDescription" placeholder="Beschreibung"></textarea>
+        <input type="date" id="newTodoDate" placeholder="Datum" />
+        <button id="addNewTodoButton">Hinzufügen</button>
+        <button class="cancelButton" onclick="cancelNewTodo()">Abbrechen</button>
+    </div>
 </body>
 
 </html>
