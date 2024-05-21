@@ -1,4 +1,4 @@
-<?
+<?php
 // Oliver
 include 'functions.php';
 
@@ -28,14 +28,11 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
     else
     {
-        echo "Passwörter stimmen nicht überein";
         header('Location: ../Sign-up.html');
         exit();
+        // echo "Passwörter stimmen nicht überein"; // Diese Zeile entfernt, weil header() verwendet wird.
     }
-
 }
-
-
 
 function Connect()
 {
@@ -60,7 +57,6 @@ function Connect()
  * @param string $username Der zu überprüfende Benutzername.
  * @return bool Wahr, wenn der Benutzername existiert, sonst falsch.
  */
-
 function UsernameExist($username)
 {
     $connection = Connect();
@@ -79,13 +75,14 @@ function UsernameExist($username)
  * 
  * @param string $username Der Benutzername des neuen Benutzers.
  * @param string $password Das Passwort des neuen Benutzers.
+ * @param string $email Die E-Mail des neuen Benutzers.
  */
 function UserAdd($username, $password, $email)
 {
     $connection = Connect();
     // Passwort wird gehasht, um es sicher in der Datenbank zu speichern.
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
-    $stmt = mysqli_prepare($connection, "INSERT INTO Users (Username, Password,Email) VALUES (?, ?,?)");
+    $stmt = mysqli_prepare($connection, "INSERT INTO Users (Username, Password, Email) VALUES (?, ?, ?)");
     mysqli_stmt_bind_param($stmt, 'sss', $username, $hashedPassword, $email);
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
