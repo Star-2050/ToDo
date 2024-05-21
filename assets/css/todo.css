@@ -12,7 +12,7 @@
     border: 1px solid #444;
     padding: 1rem;
     border-radius: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 0px; /* Verringerter Abstand zwischen den To-Do-Elementen */
     color: #fff;
 }
 
