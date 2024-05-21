@@ -6,6 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
     <link rel="stylesheet" href="assets/css/mainPage.css">
+    <link rel="menu-sheet" href="ToDo/menu.html">
     
 </head>
 
@@ -17,16 +18,17 @@
 
             <!--<li class="menu-item active">Heute</li>-->
             <li class="menu-item">Demnächst</li>
+
          
         </ul>
         <!-- Project Section -->
         <div class="projects">
             <h3>&nbsp;Meine Projekte</h3>
             <ul class="menu">
-                <li class="menu-item">Bildung</li>
-                <li class="menu-item">Privates</li>
-                <li class="menu-item">Programmation</li>
-                <li class="menu-item">ToDoWebsite</li>
+                <button class="menu-item active btn-bd-primary">Bildung</button><br>
+                <button class="menu-item active btn-bd-primary">Privates</button><br>
+                <button class="menu-item active btn-bd-primary">Programmation</button><br>
+                <button class="menu-item active btn-bd-primary">ToDoWebsite</button>
             </ul>
         </div>
     </div>
@@ -36,11 +38,11 @@
         <div class="task-list">
             <div class="task">
                 <input type="checkbox" id="task-1">
-                <label for="task-1">Basic-Fit</label>
+                <button for="task-1">Basic-Fit</butto>
                 <span class="time"></span>
             </div>
-            <!-- Add Task Button -->
-            <button class="add-task btn-bd-primary">Aufgabe hinzufügen</button>
+            
+
         </div>
     </div>
     <script src="script.js"></script>
@@ -52,6 +54,17 @@
             const minutes = now.getMinutes().toString().padStart(2, '0');
             return hours + ':' + minutes;
         }
+        function loadMenuContent() {
+            fetch('ToDo/menu.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('menu-content').innerHTML = data;
+                })
+                .catch(error => console.error('Erreur lors du chargement du menu:', error));
+        }
+
+        // Charger le contenu du menu au chargement de la page
+        window.onload = loadMenuContent;
 
         // Mettre à jour le contenu de la balise <span class="time"> avec l'heure actuelle
         document.querySelector('.time').textContent = getCurrentTime();
