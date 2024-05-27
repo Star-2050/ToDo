@@ -7,19 +7,16 @@
     <title>Task Manager</title>
     <link rel="stylesheet" href="assets/css/mainPage.css">
     <link rel="stylesheet" href="assets/css/todo.css" />
-    <!-- jQuery einbinden -->
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/todo.js"></script>
 </head>
 
 <body>
     <div class="sidebar">
-        <!-- Navigation Links -->
         <ul class="menu">
             <li class="menu-item active btn-bd-primary">Heute</li>
             <li class="menu-item">Demnächst</li>
         </ul>
-        <!-- Project Section -->
         <div class="projects">
             <h3>&nbsp;Meine Projekte</h3>
             <ul class="menu">
@@ -43,13 +40,15 @@
 
     <button id="addButton">+</button>
 
-    <div id="newTodoForm">
+    <div id="newTodoForm" style="display: none;">
         <h3>Neues To-Do</h3>
-        <input type="text" id="newTodoTitle" placeholder="Titel" />
-        <textarea id="newTodoDescription" placeholder="Beschreibung"></textarea>
-        <input type="date" id="newTodoDate" placeholder="Datum" />
-        <button id="addNewTodoButton">Hinzufügen</button>
-        <button class="cancelButton" onclick="cancelNewTodo()">Abbrechen</button>
+        <form action="../PHP/add_todo.php" method="POST" id="todoForm">
+            <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
+            <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
+            <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
+            <button type="submit">Hinzufügen</button>
+            <button type="button" id="cancelButton">Abbrechen</button>
+        </form>
     </div>
 </body>
 

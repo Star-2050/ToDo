@@ -12,11 +12,12 @@
     border: 1px solid #444;
     padding: 1rem;
     border-radius: 8px;
-    margin-bottom: 0.2rem; /* Verringerter Abstand zwischen den To-Do-Elementen */
+    margin-bottom: 0.2rem;
+    /* Verringerter Abstand zwischen den To-Do-Elementen */
     color: #fff;
 }
 
-.todo-item > div {
+.todo-item>div {
     margin-bottom: 0.5rem;
 }
 
@@ -74,7 +75,7 @@
     padding: 20px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
-    width : 400px;
+    width: 400px;
 }
 
 #newTodoForm input,
@@ -102,4 +103,3 @@
 #newTodoForm .cancelButton {
     background-color: #ff0000;
 }
-

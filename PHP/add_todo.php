@@ -9,26 +9,41 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $title = $_POST['title'];
         $description = $_POST['description'];
         $date = $_POST['date'];
-        $userID = $_SESSION['userID'];
-        $listID = $_SESSION['listID'];
+        $listID = $_SESSION['listID'] ?? 1; // Beispielhafte ListID, falls nicht in der Session vorhanden
 
-        addNewTodoItem($userID, $listID, $title, $description, $date);
-        echo "To-Do item added successfully.";
+        if (addNewTodoItem($listID, $title, $description, $date))
+        {
+            header('Location: ../ToDoPlus.html');
+            exit();
+        }
+        else
+        {
+            header('Location: ../ToDoPlus.html');
+            exit();
+        }
     }
     else
     {
-        echo "Title, description, and date are required.";
+        header('Location: ../ToDoPlus.html');
+        exit();
     }
 }
 
-function addNewTodoItem($userID, $listID, $title, $description, $date)
+function addNewTodoItem($listID, $title, $description, $date)
 {
     $connection = Connect();
-    $stmt = mysqli_prepare($connection, "INSERT INTO ToDos (UserID, ListID, Task, Beschreibung, Datum) VALUES (?, ?, ?, ?, ?)");
-    mysqli_stmt_bind_param($stmt, 'iisss', $userID, $listID, $title, $description, $date);
-    mysqli_stmt_execute($stmt);
+    $stmt = mysqli_prepare($connection, "INSERT INTO ToDos (ListID, Task, Beschreibung, Datum) VALUES (?, ?, ?, ?)");
+    if ($stmt === false)
+    {
+        die('Prepare failed: ' . htmlspecialchars($connection->error));
+    }
+    mysqli_stmt_bind_param($stmt, 'isss', $listID, $title, $description, $date);
+    $result = mysqli_stmt_execute($stmt);
+    if ($result === false)
+    {
+        die('Execute failed: ' . htmlspecialchars(mysqli_stmt_error($stmt)));
+    }
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
-    header('Location: ../ToDoPlus.html');
-    exit();
+    return $result;
 }
