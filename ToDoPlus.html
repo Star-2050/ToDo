@@ -7,7 +7,6 @@
     <title>Task Manager</title>
     <link rel="stylesheet" href="assets/css/mainPage.css">
     <link rel="menu-sheet" href="ToDo/menu.html">
-    
 </head>
 
 <body>
@@ -15,11 +14,7 @@
         <!-- Navigation Links -->
         <ul class="menu">
             <li class="menu-item active btn-bd-primary">Heute</li>
-
-            <!--<li class="menu-item active">Heute</li>-->
             <li class="menu-item">Demnächst</li>
-
-         
         </ul>
         <!-- Project Section -->
         <div class="projects">
@@ -38,25 +33,16 @@
         <div class="task-list">
             <div class="task">
                 <input type="checkbox" id="task-1">
-                <button for="task-1">Basic-Fit</butto>
-                <span class="time"></span>
+                <button for="task-1">Basic-Fit</button>
             </div>
             <div class="slider-section">
                 <h3>&nbsp;Slider Control</h3>
                 <input type="range" class="slider" id="mySlider" min="1" max="100" value="50">
             </div>
-
         </div>
     </div>
     <script src="script.js"></script>
     <script>
-        // Fonction pour obtenir l'heure actuelle au format HH:MM
-        function getCurrentTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            return hours + ':' + minutes;
-        }
         function loadMenuContent() {
             fetch('ToDo/menu.html')
                 .then(response => response.text())
@@ -68,10 +54,7 @@
 
         // Charger le contenu du menu au chargement de la page
         window.onload = loadMenuContent;
-
-        // Mettre à jour le contenu de la balise <span class="time"> avec l'heure actuelle
-        document.querySelector('.time').textContent = getCurrentTime();
     </script>
-</body> 
+</body>
 
 </html>
