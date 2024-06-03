@@ -6,8 +6,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Task Manager</title>
     <link rel="stylesheet" href="assets/css/mainPage.css">
-    <link rel="menu-sheet" href="ToDo/menu.html">
-    
+    <link rel="stylesheet" href="assets/css/todo.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/todo.js"></script>
 </head>
 
 <body>
@@ -19,53 +20,61 @@
         <div class="projects">
             <h3>&nbsp;Meine Projekte</h3>
             <ul class="menu">
-                <li class="menu-item">Bildung</li>
-                <li class="menu-item">Privates</li>
-                <li class="menu-item">Programmation</li>
-                <li class="menu-item">ToDoWebsite</li>
+                <li><button class="menu-item active btn-bd-primary fixed-size-button">Bildung</button></li>
+                <li><button class="menu-item active btn-bd-primary fixed-size-button">Privates</button></li>
+                <li><button class="menu-item active btn-bd-primary fixed-size-button">Programmation</button></li>
+                <li><button class="menu-item active btn-bd-primary fixed-size-button">ToDoWebsite</button></li>
             </ul>
         </div>
     </div>
-    <div class="content">
-        <!-- Tasks for Today -->
-        <h1>Heute</h1>
-        <div class="task-list">
-            <div class="task">
-                <input type="checkbox" id="task-1">
-                <button for="task-1">Basic-Fit</butto>
-                <span class="time"></span>
+    <h1>Heute</h1>
+    <div id="page-wrapper">
+        <section id="main">
+            <div class="content">
+                <div id="todo-container">
+                    <!-- To-Do items will be loaded here -->
+                </div>
             </div>
             <div class="slider-section">
                 <h3>&nbsp;Slider Control</h3>
                 <input type="range" class="slider" id="mySlider" min="1" max="100" value="50">
             </div>
-
-        </div>
+        </section>
     </div>
-    <script src="script.js"></script>
+
+    <button id="addButton">+</button>
+
+    <div id="newTodoForm" style="display: none;">
+        <h3>Neues To-Do</h3>
+        <form action="../PHP/add_todo.php" method="POST" id="todoForm">
+            <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
+            <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
+            <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
+            <button type="submit">Hinzufügen</button>
+            <button type="button" id="cancelButton">Abbrechen</button>
+        </form>
+    </div>
+
     <script>
-        // Fonction pour obtenir l'heure actuelle au format HH:MM
-        function getCurrentTime() {
-            const now = new Date();
-            const hours = now.getHours().toString().padStart(2, '0');
-            const minutes = now.getMinutes().toString().padStart(2, '0');
-            return hours + ':' + minutes;
-        }
-        function loadMenuContent() {
-            fetch('ToDo/menu.html')
-                .then(response => response.text())
-                .then(data => {
-                    document.getElementById('menu-content').innerHTML = data;
-                })
-                .catch(error => console.error('Erreur lors du chargement du menu:', error));
-        }
+        $(document).ready(function () {
+            function loadTodos() {
+                $.ajax({
+                    url: "PHP/get_todos.php",
+                    method: "POST",
+                    success: function (data) {
+                        $("#todo-container").html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("An error occurred while fetching the to-dos.");
+                    }
+                });
+            }
 
-        // Charger le contenu du menu au chargement de la page
-        window.onload = loadMenuContent;
-
-        // Mettre à jour le contenu de la balise <span class="time"> avec l'heure actuelle
-        document.querySelector('.time').textContent = getCurrentTime();
+            // Load todos on page load
+            loadTodos();
+        });
     </script>
-</body> 
+</body>
 
 </html>
