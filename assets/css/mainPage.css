@@ -149,7 +149,6 @@ body, html {
 .slider::-moz-range-thumb {
     width: 25px; /* Thumb width */
     height: 25px; /* Thumb height */
-    border-radius: 50%; /* Rounded thumb */
     background: #4CAF50; /* Green background */
     cursor: pointer; /* Pointer cursor */
 }
