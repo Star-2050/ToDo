@@ -42,7 +42,7 @@
 
     <div id="newTodoForm" style="display: none;">
         <h3>Neues To-Do</h3>
-        <form action="../PHP/add_todo.php" method="POST" id="todoForm">
+        <form action="\PHP\add_todo.php" method="POST" id="todoForm">
             <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
             <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
             <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
@@ -50,6 +50,27 @@
             <button type="button" id="cancelButton">Abbrechen</button>
         </form>
     </div>
+
+    <script>
+        $(document).ready(function () {
+            function loadTodos() {
+                $.ajax({
+                    url: "PHP/get_todos.php",
+                    method: "POST",
+                    success: function (data) {
+                        $("#todo-container").html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("An error occurred while fetching the to-dos.");
+                    }
+                });
+            }
+
+            // Load todos on page load
+            loadTodos();
+        });
+    </script>
 </body>
 
 </html>
