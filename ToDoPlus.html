@@ -7,7 +7,7 @@
     <title>Task Manager</title>
     <link rel="stylesheet" href="assets/css/mainPage.css">
     <link rel="menu-sheet" href="ToDo/menu.html">
-    
+
 </head>
 
 <body>
@@ -33,46 +33,46 @@
             <div class="task">
                 <input type="checkbox" id="task-1">
                 <button for="task-1">Basic-Fit</butto>
-                <span class="time"></span>
+                    <span class="time"></span>
             </div>
             <div class="slider-section">
                 <h3>&nbsp;Slider Control</h3>
                 <input type="range" class="slider" id="mySlider" min="1" max="100" value="50">
             </div>
 
-    <button id="addButton">+</button>
+            <button id="addButton">+</button>
 
-    <div id="newTodoForm" style="display: none;">
-        <h3>Neues To-Do</h3>
-        <form action="\PHP\add_todo.php" method="POST" id="todoForm">
-            <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
-            <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
-            <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
-            <button type="submit">Hinzufügen</button>
-            <button type="button" id="cancelButton">Abbrechen</button>
-        </form>
-    </div>
+            <div id="newTodoForm" style="display: none;">
+                <h3>Neues To-Do</h3>
+                <form action="\PHP\add_todo.php" method="POST" id="todoForm">
+                    <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
+                    <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
+                    <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
+                    <button type="submit">Hinzufügen</button>
+                    <button type="button" id="cancelButton">Abbrechen</button>
+                </form>
+            </div>
 
-    <script>
-        $(document).ready(function () {
-            function loadTodos() {
-                $.ajax({
-                    url: "PHP/get_todos.php",
-                    method: "POST",
-                    success: function (data) {
-                        $("#todo-container").html(data);
-                    },
-                    error: function (xhr, status, error) {
-                        console.error(xhr.responseText);
-                        alert("An error occurred while fetching the to-dos.");
+            <script>
+                $(document).ready(function () {
+                    function loadTodos() {
+                        $.ajax({
+                            url: "PHP/get_todos.php",
+                            method: "POST",
+                            success: function (data) {
+                                $("#todo-container").html(data);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                                alert("An error occurred while fetching the to-dos.");
+                            }
+                        });
                     }
-                });
-            }
 
-            // Load todos on page load
-            loadTodos();
-        });
-    </script>
+                    // Load todos on page load
+                    loadTodos();
+                });
+            </script>
 </body>
 
 </html>
