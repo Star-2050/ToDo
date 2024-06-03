@@ -39,14 +39,12 @@
                 <h3>&nbsp;Slider Control</h3>
                 <input type="range" class="slider" id="mySlider" min="1" max="100" value="50">
             </div>
-        </section>
-    </div>
 
     <button id="addButton">+</button>
 
     <div id="newTodoForm" style="display: none;">
         <h3>Neues To-Do</h3>
-        <form action="../PHP/add_todo.php" method="POST" id="todoForm">
+        <form action="\PHP\add_todo.php" method="POST" id="todoForm">
             <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
             <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
             <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />

@@ -2,6 +2,9 @@
 // Oliver
 session_start();
 
+include 'functions.php';
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     // Retrieve form data
@@ -26,29 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         exit();
     }
 }
-
-/**
- * Stellt eine Verbindung zur Datenbank her.
- * 
- * @return mysqli Eine Verbindungskennung, die von mysqli_connect zurückgegeben wird.
- */
-function Connect()
-{
-    // Datenbankverbindungseinstellungen
-    $hostname = '89.58.47.144';
-    $username = 'ToDoPlusUser';
-    $password = 'todopluspw';
-    $dbname = 'dbToDoPlus';
-
-    // Verbindungsaufbau
-    $connection = mysqli_connect($hostname, $username, $password, $dbname);
-    if (!$connection)
-    {
-        die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
-    }
-    return $connection;
-}
-
 /**
  * Authentifiziert einen Benutzer basierend auf Benutzername/Email und Passwort.
  * 
