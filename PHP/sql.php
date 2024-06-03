@@ -1,28 +1,124 @@
 <?php
+include 'functions.php';
 
-function ConnectAndSelect()
+/*
+ * Stellt eine Verbindung zur Datenbank her.
+ * 
+ * @return mysqli Eine Verbindungskennung, die von mysqli_connect zurückgegeben wird.
+ */
+function Connect()
 {
+    // Datenbankverbindungseinstellungen
     $hostname = '89.58.47.144';
-    $username = 'testUser';
-    $password = 'testPasswort';
-    $dbname = 'dbMeineDatenbank';
+    $username = 'ToDoPlusUser';
+    $password = 'todopluspw';
+    $dbname = 'dbToDoPlus';
 
+    // Verbindungsaufbau
     $connection = mysqli_connect($hostname, $username, $password, $dbname);
     if (!$connection)
     {
         die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
     }
+    return $connection;
+}
 
-    $query = "SELECT dtIAM, dtNote, dtFach FROM tblNote";
-    $result = mysqli_query($connection, $query);
-
-    echo "<table border='1'><tr><th>IAM</th><th>Note</th><th>Fach</th></tr>";
-    while ($row = mysqli_fetch_assoc($result))
-    {
-        echo "<tr><td>{$row['dtIAM']}</td><td>{$row['dtNote']}</td><td>{$row['dtFach']}</td></tr>";
-    }
-    echo "</table>";
-
+/*
+ * Fügt eine neue To-Do-Liste in die Datenbank ein.
+ * 
+ * @param string $listName Der Name der To-Do-Liste.
+ */
+function ToDoListAdd($listName)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "INSERT INTO ToDoLists (ListName) VALUES (?)");
+    mysqli_stmt_bind_param($stmt, 's', $listName);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
     mysqli_close($connection);
 }
 
+/**
+ * Löscht eine To-Do-Liste aus der Datenbank.
+ * 
+ * @param int $listID Die ID der zu löschenden Liste.
+ */
+function ToDoListDelete($listID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "DELETE FROM ToDoLists WHERE ListID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $listID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+}
+
+/**
+ * Fügt ein To-Do in die Datenbank ein.
+ * 
+ * @param int $listID Die ID der Liste, zu der das To-Do hinzugefügt wird.
+ * @param string $task Die Beschreibung des To-Do.
+ */
+function ToDoAdd($listID, $task, $Datum, $Beschreibung)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "INSERT INTO ToDos (ListID, Task, Datum, Beschreibung) VALUES (?, ?)");
+    mysqli_stmt_bind_param($stmt, 'is', $listID, $task, $Datum, $Beschreibun);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+}
+
+/**
+ * Löscht ein To-Do aus der Datenbank.
+ * 
+ * @param int $todoID Die ID des zu löschenden To-Do.
+ */
+function ToDoDelete($todoID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "DELETE FROM ToDos WHERE TodoID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $todoID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+}
+
+
+
+
+
+/**
+ * Löscht einen Benutzer aus der Datenbank.
+ * 
+ * @param int $userID Die ID des zu löschenden Benutzers.
+ */
+function UserDelete($userID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "DELETE FROM Users WHERE UserID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+}
+
+function GetUserToDoLists($userID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "SELECT t.ListID, t.ListName FROM ToDoLists t JOIN UserToDoLists utl ON t.ListID = utl.ListID WHERE utl.UserID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $lists = [];
+    while ($row = mysqli_fetch_assoc($result))
+    {
+        $lists[] = $row;
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $lists;
+}

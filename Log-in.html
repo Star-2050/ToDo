@@ -2,10 +2,11 @@
 <html>
 
 <head>
-    <title id="pageTitle">Log In to TodoPlus</title>
+    <title id="pageTitle">Log into TodoPlus</title>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
     <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/signup-login.css" />
 </head>
 
 <body class="is-preload">
@@ -24,17 +25,18 @@
         <!-- Banner -->
         <section id="banner">
             <div class="content">
-                <header>
-                    <p>Willkommen<br>
-                        Geben sie uns hier eure Daten.</p>
-                </header>
-                <ul class="actions">
-                    <li><a href="right-sidebar.html" class="button">Submit</a></li>
-                </ul>
+                <form id="login-form" action="PHP/login.php" method="post">
+                    <h2>Willkommen</h2>
+                    <span class="image"><img src="images/pic01.png" alt="" /></span>
+                    <input type="text" name="emailOrUsername" placeholder="E-Mail / Username" required>
+                    <input type="password" name="password" placeholder="Passwort" required>
+                    <ul class="actions">
+                        <li><button type="submit" class="button">Submit</button></li>
+                    </ul>
+                </form>
             </div>
         </section>
-
-        <!--<a href="index.html" class="image"><img src="images/pic01.png" alt="" /></a>-->
     </div>
+</body>
 
 </html>

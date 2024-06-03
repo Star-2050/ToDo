@@ -1,0 +1,49 @@
+<!DOCTYPE HTML>
+<html>
+
+<head>
+    <title>ToDo List</title>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+    <link rel="stylesheet" href="assets/css/main.css" />
+    <link rel="stylesheet" href="assets/css/todo.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+</head>
+
+<body>
+    <div id="page-wrapper">
+        <header id="header">
+            <h1 id="logo"><a href="index.html">TodoPlus</a></h1>
+        </header>
+        <section id="main">
+            <div class="content">
+                <div id="todo-container">
+                    <!-- To-Do items will be loaded here -->
+                </div>
+            </div>
+        </section>
+    </div>
+
+    <script>
+        $(document).ready(function () {
+            function loadTodos() {
+                $.ajax({
+                    url: "PHP/get_todos.php",
+                    method: "POST",
+                    success: function (data) {
+                        $("#todo-container").html(data);
+                    },
+                    error: function (xhr, status, error) {
+                        console.error(xhr.responseText);
+                        alert("An error occurred while fetching the to-dos.");
+                    }
+                });
+            }
+
+            // Load todos on page load
+            loadTodos();
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,105 @@
+.todo-container {
+    max-width: 800px;
+    margin: 2rem auto;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item {
+    background-color: #3a3a3a;
+    border: 1px solid #444;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.2rem;
+    /* Verringerter Abstand zwischen den To-Do-Elementen */
+    color: #fff;
+}
+
+.todo-item>div {
+    margin-bottom: 0.5rem;
+}
+
+.todo-date {
+    font-weight: bold;
+    color: #bbb;
+}
+
+.todo-task {
+    font-size: 1.2em;
+    color: #ff5757;
+}
+
+.todo-description {
+    color: #bbb;
+}
+
+.todo-item2 {
+    width: 50%;
+    background-color: #000000;
+    color: #ffffff;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    padding: 15px;
+    margin-bottom: 10px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+#addButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#newTodoForm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000000;
+    color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 400px;
+}
+
+#newTodoForm input,
+#newTodoForm textarea {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 360px;
+    min-width: 360px;
+    max-height: 250px;
+}
+
+#newTodoForm button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#newTodoForm .cancelButton {
+    background-color: #ff0000;
+}
