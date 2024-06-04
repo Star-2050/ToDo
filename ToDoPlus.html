@@ -25,6 +25,29 @@
                 <li><button class="menu-item active btn-bd-primary fixed-size-button">Programmation</button></li>
                 <li><button class="menu-item active btn-bd-primary fixed-size-button">ToDoWebsite</button></li>
             </ul>
+            <div id="todoList-container">
+                <!-- To-Do Lists will be loaded here -->
+            </div>
+            <script>
+                $(document).ready(function () {
+                    function loadTodoLists() {
+                        $.ajax({
+                            url: "PHP/getToDoLists.php", // Correct the URL here
+                            method: "POST",
+                            success: function (data) {
+                                $("#todoList-container").html(data);
+                            },
+                            error: function (xhr, status, error) {
+                                console.error(xhr.responseText);
+                                alert("An error occurred while fetching the to-dos.");
+                            }
+                        });
+                    }
+
+                    // Load todos on page load
+                    loadTodoLists();
+                });
+            </script>
         </div>
     </div>
     <h1>Heute</h1>
