@@ -64,13 +64,13 @@ body, html {
 .btn-bd-primary {
     background-color: #712cd9; /* Violet background */
     color: rgb(14, 255, 149); /* Bright green text color */
-    border-color: #0081b4; /* Blue border color */
+    border-color: #E6A19E; /* Blue border color */
 }
 
 /* Hover effect for active menu item buttons */
 .menu-item.active.btn-bd-primary:hover {
-    background-color: #4CAF50; /* Green background on hover */
-    color: white; /* White text color */
+    background-color: #E0160B; /* Green background on hover */
+    color: #000000; /* White text color */
     border: none; /* No border */
     list-style: none;
     padding: 10px;
