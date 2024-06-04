@@ -10,7 +10,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
 
     $userID = $_SESSION['userID'];
-    $listID = $_SESSION['listID'];
+    $listID = $_SESSION['listID'];  // Pull listID from session
     $filter = isset($_SESSION['todoFilter']) ? $_SESSION['todoFilter'] : 3;
 
     $todos = GetToDosFromUserList($userID, $listID, $filter);

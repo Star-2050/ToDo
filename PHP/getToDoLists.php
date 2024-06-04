@@ -33,7 +33,7 @@ function Connect()
 function GetToDoLists($userID)
 {
     $connection = Connect();
-    $sql = "SELECT ToDoLists.ListName FROM UserToDoLists 
+    $sql = "SELECT ToDoLists.ListID, ToDoLists.ListName FROM UserToDoLists 
             JOIN ToDoLists ON UserToDoLists.ListID = ToDoLists.ListID 
             WHERE UserToDoLists.UserID = ?";
     $stmt = $connection->prepare($sql);
@@ -57,21 +57,20 @@ function GetToDoLists($userID)
     $todoLists = array();
     while ($row = $result->fetch_assoc())
     {
-        $todoLists[] = $row["ListName"];
+        $todoLists[] = $row;
     }
     $stmt->close();
     $connection->close();
     return $todoLists;
 }
 
-function DisplayToDoLists($todos)
+function DisplayToDoLists($todoLists)
 {
     echo '<div class="todo-lists">';
-    foreach ($todos as $todo)
+    foreach ($todoLists as $todoList)
     {
-        echo '<button class="todo-list-button">' . htmlspecialchars($todo, ENT_QUOTES, 'UTF-8') . '</button>';
+        echo '<button class="project-button" data-listid="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
         echo '<br/>';
     }
     echo '</div>';
 }
-

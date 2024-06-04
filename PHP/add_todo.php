@@ -1,6 +1,11 @@
 <?php
 session_start();
 
+// Fehleranzeige aktivieren
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (isset($_POST['title']) && isset($_POST['description']) && isset($_POST['date']))
@@ -8,17 +13,24 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         $title = $_POST['title'];
         $description = $_POST['description'];
         $date = $_POST['date'];
-        $listID = $_SESSION['listID'] ?? 1; // Beispielhafte ListID, falls nicht in der Session vorhanden
+        $listID = $_SESSION['listID'];
 
-        if (addNewTodoItem($listID, $title, $description, $date))
+        if (isValidListID($listID))
         {
-            header('Location: ../ToDoPlus.html');
-            exit();
+            if (addNewTodoItem($listID, $title, $description, $date))
+            {
+                header('Location: ../ToDoPlus.html');
+                exit();
+            }
+            else
+            {
+                header('Location: ../ToDoPlus.html');
+                exit();
+            }
         }
         else
         {
-            header('Location: ../ToDoPlus.html');
-            exit();
+            die('Invalid list ID.');
         }
     }
     else
@@ -26,6 +38,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         header('Location: ../ToDoPlus.html');
         exit();
     }
+}
+
+function isValidListID($listID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "SELECT 1 FROM ToDoLists WHERE ListID = ?");
+    mysqli_stmt_bind_param($stmt, 'i', $listID);
+    mysqli_stmt_execute($stmt);
+    mysqli_stmt_store_result($stmt);
+    $isValid = mysqli_stmt_num_rows($stmt) > 0;
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+    return $isValid;
 }
 
 function addNewTodoItem($listID, $title, $description, $date)
@@ -40,12 +65,13 @@ function addNewTodoItem($listID, $title, $description, $date)
     $result = mysqli_stmt_execute($stmt);
     if ($result === false)
     {
-        die('Execute failed: ' . htmlspecialchars(mysqli_stmt_error($stmt)));
+        die('Execute failed: ' . htmlspecialchars(mysqli_stmt_error($stmt)) . ' with ListID=' . $listID . ', Title=' . $title . ', Description=' . $description . ', Date=' . $date);
     }
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
     return $result;
 }
+
 function Connect()
 {
     $hostname = '89.58.47.144';

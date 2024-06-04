@@ -1,3 +1,4 @@
+/* Allgemeine Stile für Menüpunkte */
 .menu-item {
     padding: 10px;
     cursor: pointer;
@@ -9,6 +10,7 @@
     color: #fff;
 }
 
+/* Stile für feste Schaltflächen */
 .fixed-size-button {
     width: 90%;
     padding: 10px;
@@ -25,6 +27,7 @@
     background-color: #0056b3;
 }
 
+/* Stile für die Listen */
 .todo-lists {
     padding: 10px;
 }
@@ -45,7 +48,7 @@
     background-color: #0056b3;
 }
 
-/* Additional styles for todo container and items */
+/* Stile für das To-Do-Container und die Elemente */
 .todo-container {
     max-width: 800px;
     margin: 4rem auto;
@@ -87,6 +90,7 @@
     height: 5%;
 }
 
+/* Stile für den Hinzufügen-Button */
 #addButton {
     position: fixed;
     bottom: 20px;
@@ -105,7 +109,8 @@
     justify-content: center;
 }
 
-#newTodoForm {
+/* Stile für die Formulare (To-Do und Liste) */
+#newTodoForm,#newListForm {
     display: none;
     position: fixed;
     top: 50%;
@@ -117,10 +122,12 @@
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
     border-radius: 5px;
     width: 400px;
+    z-index: 1000;
 }
 
 #newTodoForm input,
-#newTodoForm textarea {
+#newTodoForm textarea,
+#newListForm input {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -128,10 +135,10 @@
     width: 90%;
     max-width: 360px;
     min-width: 360px;
-    max-height: 250px;
 }
 
-#newTodoForm button {
+#newTodoForm button,
+#newListForm button {
     background-color: #007bff;
     color: #ffffff;
     border: none;
@@ -141,6 +148,7 @@
     margin-right: 10px;
 }
 
-#newTodoForm .cancelButton {
+#newTodoForm .cancelButton,
+#newListForm .cancelButton {
     background-color: #ff0000;
 }
