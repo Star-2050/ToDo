@@ -3,7 +3,6 @@ session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
-
     if (!isset($_SESSION['userID']))
     {
         header('Location: ../Log-in.html');
@@ -38,9 +37,23 @@ function GetToDoLists($userID)
             JOIN ToDoLists ON UserToDoLists.ListID = ToDoLists.ListID 
             WHERE UserToDoLists.UserID = ?";
     $stmt = $connection->prepare($sql);
+    if (!$stmt)
+    {
+        die("Prepare failed: (" . $connection->errno . ") " . $connection->error);
+    }
+
     $stmt->bind_param("i", $userID);
-    $stmt->execute();
+    if (!$stmt->execute())
+    {
+        die("Execute failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+
     $result = $stmt->get_result();
+    if (!$result)
+    {
+        die("Getting result set failed: (" . $stmt->errno . ") " . $stmt->error);
+    }
+
     $todoLists = array();
     while ($row = $result->fetch_assoc())
     {
@@ -56,8 +69,9 @@ function DisplayToDoLists($todos)
     echo '<div class="todo-lists">';
     foreach ($todos as $todo)
     {
-        echo '<button class="todo-list-button">' . htmlspecialchars($todo) . '</button>';
+        echo '<button class="todo-list-button">' . htmlspecialchars($todo, ENT_QUOTES, 'UTF-8') . '</button>';
         echo '<br/>';
     }
     echo '</div>';
 }
+
