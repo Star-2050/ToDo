@@ -9,8 +9,8 @@ body, html {
 .sidebar {
     background-color: #111; /* Dark background */
     color: white; /* White text color */
-    height: 100vh; /* Full viewport height */
-    width: 250px; /* Fixed width */
+    height: 100%; /* Full viewport height */
+    width: 5%; /* Fixed width */
     position: fixed; /* Fixed position */
 }
 
@@ -118,7 +118,6 @@ body, html {
 
 /* Slider input styles */
 .slider {
-    -webkit-appearance: none; /* Remove default appearance in WebKit browsers */
     width: 100%; /* Full width */
     height: 15px; /* Slider height */
     border-radius: 5px; /* Rounded corners */

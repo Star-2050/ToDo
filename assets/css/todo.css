@@ -1,6 +1,7 @@
 .todo-container {
     max-width: 800px;
-    margin: 2rem auto;
+    margin: 4rem auto;
+
     background-color: #2a2a2a;
     padding: 1rem;
     border-radius: 8px;
@@ -35,9 +36,9 @@
     color: #bbb;
 }
 
-.delete-icon{
-        width: 30px;
-        height: 30px;
+.delete-icon {
+    width: 30px;
+    height: 30px;
 }
 
 .todo-item2 {
@@ -134,4 +135,3 @@
 .todo-list-button.active {
     background-color: #bb2525;
 }
-
