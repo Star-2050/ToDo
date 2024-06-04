@@ -62,8 +62,9 @@ function DisplayToDos($todos)
         echo '<div class="todo-task">' . htmlspecialchars($todo['Task']) . '</div>';
         echo '<div class="todo-description">' . htmlspecialchars($todo['Beschreibung']) . '</div>';
         echo '<div class="todo-date">' . htmlspecialchars($todo['Datum']) . '</div>';
-        
-        echo '<div class="todo-delete"> <img src="assets\icons\trash-bin.png" class="delete-icon" onclick="deleteTodo(\'' . htmlspecialchars($todo['Task']) . '\')"></div>';
+
+        echo '<div class="todo-delete"> <img src="assets\icons\trash-bin.png" class="delete-icon" style="width: 3%;" onclick="deleteTodo(\'' . htmlspecialchars($todo['Task']) . '\')"></div>';
         echo '</div>';
     }
+
 }

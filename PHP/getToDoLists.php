@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         exit();
     }
 
-    // Zugriff auf die Benutzer- und Listen-ID
     $userID = $_SESSION['userID'];
 
     $todoLists = GetToDoLists($userID);
@@ -57,7 +56,7 @@ function DisplayToDoLists($todos)
     echo '<div class="todo-lists">';
     foreach ($todos as $todo)
     {
-        echo '<button class="todo-list-button">' . $todo . '</button>';
+        echo '<button class="todo-list-button">' . htmlspecialchars($todo) . '</button>';
         echo '<br/>';
     }
     echo '</div>';
