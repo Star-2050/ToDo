@@ -71,6 +71,28 @@
                         });
                     }
 
+                    // Event listener for delete icon
+                    $(document).on('click', '.delete-icon', function () {
+                        var task = $(this).data('task');
+                        deleteTodo(task);
+                    });
+
+                    function deleteTodo(task) {
+                        $.ajax({
+                            url: "PHP/delete_todo.php",
+                            method: "POST",
+                            data: { task: task },
+                            success: function (data) {
+                                console.log("Todo deleted:", data);
+                                loadTodos();
+                            },
+                            error: function (xhr, status, error) {
+                                console.error("Error deleting todo:", xhr.responseText);
+                                alert("An error occurred while deleting the to-do.");
+                            }
+                        });
+                    }
+
                     // Load todos for "Heute" on page load
                     loadTodos();
 
