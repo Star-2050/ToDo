@@ -1,5 +1,5 @@
 $(document).ready(function () {
-    var currentListID = 1; // Default list ID
+    var currentListID = 3; // Default list ID
 
     function loadTodoLists() {
         $.ajax({
