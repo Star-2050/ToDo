@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//Oliver
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (!isset($_SESSION['userID']))

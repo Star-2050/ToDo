@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//Oliver
 /*
 1 = Heute
 2 = Demnächst (die nächsten 7 Tage)

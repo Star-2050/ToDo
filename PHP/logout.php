@@ -1,6 +1,6 @@
 <?php
 session_start();
-
+//Oliver
 // Unset all of the session variables
 $_SESSION = array();
 
