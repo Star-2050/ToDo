@@ -1,6 +1,6 @@
 <?php
 session_start();
-//Oliver
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (!isset($_SESSION['userID']))
@@ -11,8 +11,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
 
     $userID = $_SESSION['userID'];
     $listID = $_SESSION['listID'];  // Pull listID from session
-    $filter = isset($_SESSION['todoFilter']) ? $_SESSION['todoFilter'] : 3;
+    $filter = isset($_SESSION['todoFilter']) ? $_SESSION['todoFilter'] : 3; // Default filter
 
+    // Get todos based on the filter
     $todos = GetToDosFromUserList($userID, $listID, $filter);
     DisplayToDos($todos);
 }
@@ -39,13 +40,14 @@ function GetToDosFromUserList($userID, $listID, $filter)
             INNER JOIN UserToDoLists utl ON td.ListID = utl.ListID 
             WHERE utl.UserID = ? AND td.ListID = ?";
 
+    // Apply filters
     if ($filter == 1)
     {
-        $sql .= " AND DATE(td.Datum) = CURDATE()";
+        $sql .= " AND DATE(td.Datum) = CURDATE()"; // Filter for today's tasks
     }
     elseif ($filter == 2)
     {
-        $sql .= " AND DATE(td.Datum) > CURDATE() AND DATE(td.Datum) <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)";
+        $sql .= " AND DATE(td.Datum) = CURDATE() AND DATE(td.Datum) <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)"; // Filter for tasks in the next 7 days
     }
 
     $stmt = $connection->prepare($sql);
