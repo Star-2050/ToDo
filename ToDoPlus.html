@@ -37,7 +37,7 @@
             <div id="todoList-container">
                 <!-- To-Do Lists will be loaded here -->
             </div>
-            <button id="addListButton">+ Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
+            <button class="menu-item btn-bd-primary" id="addListButton">+ Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
         </div>
     </div>
     <h1>Aufgaben</h1>
@@ -49,7 +49,7 @@
                 </div>
             </div>
 
-            <button id="addButton">+</button>
+            <button class="menu-item btn-bd-primary" id="addButton">+</button>
 
             <div id="newTodoForm" style="display: none;">
                 <h3>Neues To-Do</h3>
@@ -58,8 +58,8 @@
                     <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
                     <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
                     <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
-                    <button type="submit">Hinzufügen</button>
-                    <button type="button" id="cancelButton" class="cancelButton">Abbrechen</button>
+                    <button class="menu-item btn-bd-primary" type="submit">Hinzufügen</button>
+                    <button class="menu-item btn-bd-primary cancelButton" type="button" id="cancelButton">Abbrechen</button>
                 </form>
             </div>
 
@@ -67,8 +67,8 @@
                 <h3>Neue Liste</h3>
                 <form action="PHP/add_list.php" method="POST" id="listForm">
                     <input type="text" name="listName" id="newListName" placeholder="Listenname" required />
-                    <button type="submit">Hinzufügen</button>
-                    <button type="button" id="cancelListButton" class="cancelButton">Abbrechen</button>
+                    <button class="menu-item btn-bd-primary" type="submit">Hinzufügen</button>
+                    <button class="menu-item btn-bd-primary cancelButton" type="button">Abbrechen</button>
                 </form>
             </div>
         </section>
@@ -79,8 +79,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Möchten Sie wirklich Ihren Account löschen?</p>
-            <button id="confirmDeleteAccount">Account löschen</button>
-            <button id="cancelDeleteAccount">Abbrechen</button>
+            <button class="menu-item btn-bd-primary" id="confirmDeleteAccount">Account löschen</button>
+            <button class="menu-item btn-bd-primary" id="cancelDeleteAccount">Abbrechen</button>
         </div>
     </div>
 </body>

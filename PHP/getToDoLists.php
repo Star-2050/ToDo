@@ -69,7 +69,7 @@ function DisplayToDoLists($todoLists)
     echo '<div class="todo-lists">';
     foreach ($todoLists as $todoList)
     {
-        echo '<button class="project-button" data-listid="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
+        echo '<button class="menu-item btn-bd-primary" data-listid="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
         echo '<br/>';
     }
     echo '</div>';
