@@ -1,7 +1,6 @@
 <?php
 session_start();
-include 'functions.php';
-
+//Oliver
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (!isset($_SESSION['userID']))
@@ -11,26 +10,52 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
 
     $userID = $_SESSION['userID'];
-    $listID = $_SESSION['listID'];
     $task = $_POST['task'];
 
-    if (deleteTodoItem($userID, $listID, $task))
+    if (deleteTodoItem($userID, $task))
     {
-        echo "To-Do item deleted successfully.";
+        echo "Todo item deleted successfully.";
     }
     else
     {
-        echo "An error occurred.";
+        echo "Failed to delete todo item.";
     }
 }
 
-function deleteTodoItem($userID, $listID, $task)
+function Connect()
+{
+    $hostname = '89.58.47.144';
+    $username = 'ToDoPlusUser';
+    $password = 'todopluspw';
+    $dbname = 'dbToDoPlus';
+
+    $connection = mysqli_connect($hostname, $username, $password, $dbname);
+    if (!$connection)
+    {
+        die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
+    }
+    return $connection;
+}
+
+function deleteTodoItem($userID, $task)
 {
     $connection = Connect();
-    $stmt = mysqli_prepare($connection, "DELETE td FROM ToDos td INNER JOIN UserToDoLists utl ON td.ListID = utl.ListID WHERE utl.UserID = ? AND td.ListID = ? AND td.Task = ?");
-    mysqli_stmt_bind_param($stmt, 'iis', $userID, $listID, $task);
-    $result = mysqli_stmt_execute($stmt);
-    mysqli_stmt_close($stmt);
-    mysqli_close($connection);
-    return $result;
+    $sql = "DELETE td FROM ToDos td 
+            INNER JOIN UserToDoLists utl ON td.ListID = utl.ListID 
+            WHERE utl.UserID = ? AND td.Task = ?";
+    $stmt = $connection->prepare($sql);
+    if (!$stmt)
+    {
+        die("Prepare failed: (" . $connection->errno . ") " . $connection->error);
+    }
+
+    $stmt->bind_param("is", $userID, $task);
+    if (!$stmt->execute())
+    {
+        return false;
+    }
+
+    $stmt->close();
+    $connection->close();
+    return true;
 }

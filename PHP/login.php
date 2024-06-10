@@ -4,6 +4,13 @@ session_start();
 
 include 'functions.php';
 
+// Überprüfen, ob der Benutzer bereits angemeldet ist
+if (isset($_SESSION['userID']))
+{
+    // Benutzer ist bereits angemeldet, weiterleiten zur ToDoPlus-Seite
+    header('Location: ../ToDoPlus.html');
+    exit();
+}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -17,6 +24,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         // Speichern der Benutzer-ID in der Session
         $_SESSION['userID'] = GetUserID($emailOrUsername);
         $_SESSION['listID'] = GetDefaultListID($_SESSION['userID']); // Falls es eine Standardliste gibt
+        $_SESSION['todoFilter'] = 1;
 
         // Redirect to the ToDoPlus page
         header('Location: ../ToDoPlus.html');
@@ -29,6 +37,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         exit();
     }
 }
+
 /**
  * Authentifiziert einen Benutzer basierend auf Benutzername/Email und Passwort.
  * 
