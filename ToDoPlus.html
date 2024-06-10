@@ -4,43 +4,85 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Task Manager</title>
+    <title>ToDoPlus</title>
+    <link rel="icon" href="images/logo.png" type="image/png">
     <link rel="stylesheet" href="assets/css/mainPage.css">
+    <link rel="stylesheet" href="assets/css/todo.css" />
+    <link rel="stylesheet" href="assets/css/dropdown.css" />
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="assets/js/todo.js"></script>
+    <script src="assets/js/main.js"></script>
+    <script src="assets/js/loading.js"></script>
 </head>
 
 <body>
-    <div class="sidebar">
-        <!-- Navigation Links -->
-        <ul class="menu">
-            <li class="menu-item active">Heute</li>
-            <li class="menu-item">Demnächst</li>
-            <li class="menu-item">Filter und Etiketten</li>
-        </ul>
-        <!-- Project Section -->
-        <div class="projects">
-            <h3>Meine Projekte</h3>
-            <ul class="menu">
-                <li class="menu-item">Bildung</li>
-                <li class="menu-item">Privates</li>
-                <li class="menu-item">Programmation</li>
-                <li class="menu-item">ToDoWebsite</li>
-            </ul>
-        </div>
-    </div>
-    <div class="content">
-        <!-- Tasks for Today -->
-        <h1>Heute</h1>
-        <div class="task-list">
-            <div class="task">
-                <input type="checkbox" id="task-1">
-                <label for="task-1">Basic-Fit</label>
-                <span class="time">14:00-15:00</span>
+    <div class="header">
+        <div class="dropdown">
+            <button class="dropbtn">&#9881;</button>
+            <div class="dropdown-content">
+                <a href="#" id="logout">Ausloggen</a>
+                <a href="#" id="deleteAccount">Account löschen</a>
             </div>
-            <!-- Add Task Button -->
-            <button class="add-task">Aufgabe hinzufügen</button>
         </div>
     </div>
-    <script src="script.js"></script>
+
+    <div class="sidebar">
+        <ul class="menu">
+            <li><button class="menu-item btn-bd-primary" id="btnToday">Heute</button></li>
+            <li><button class="menu-item btn-bd-primary" id="btnUpcoming">Demnächst</button></li>
+            <li><button class="menu-item btn-bd-primary" id="btnAll">Alle</button></li>
+        </ul>
+        <div class="projects">
+            <h3>&nbsp;Meine Projekte</h3>
+            <div id="todoList-container">
+                <!-- To-Do Lists will be loaded here -->
+            </div>
+            <button id="addListButton">+ Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
+        </div>
+    </div>
+    <h1>Aufgaben</h1>
+    <div id="page-wrapper">
+        <section id="main">
+            <div class="content">
+                <div id="todo-container">
+                    <!-- To-Do items will be loaded here -->
+                </div>
+            </div>
+
+            <button id="addButton">+</button>
+
+            <div id="newTodoForm" style="display: none;">
+                <h3>Neues To-Do</h3>
+                <form action="PHP/add_todo.php" method="POST" id="todoForm">
+                    <input type="hidden" name="listID" value="1" />
+                    <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
+                    <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
+                    <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
+                    <button type="submit">Hinzufügen</button>
+                    <button type="button" id="cancelButton" class="cancelButton">Abbrechen</button>
+                </form>
+            </div>
+
+            <div id="newListForm" style="display: none;"> <!-- Formular zum Hinzufügen einer neuen Liste -->
+                <h3>Neue Liste</h3>
+                <form action="PHP/add_list.php" method="POST" id="listForm">
+                    <input type="text" name="listName" id="newListName" placeholder="Listenname" required />
+                    <button type="submit">Hinzufügen</button>
+                    <button type="button" id="cancelListButton" class="cancelButton">Abbrechen</button>
+                </form>
+            </div>
+        </section>
+    </div>
+
+    <!-- Modal for confirming account deletion -->
+    <div id="deleteAccountModal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <p>Möchten Sie wirklich Ihren Account löschen?</p>
+            <button id="confirmDeleteAccount">Account löschen</button>
+            <button id="cancelDeleteAccount">Abbrechen</button>
+        </div>
+    </div>
 </body>
 
 </html>

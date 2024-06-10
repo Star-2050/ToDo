@@ -1,0 +1,155 @@
+
+/* Allgemeine Stile für Menüpunkte */
+.menu-item {
+    padding: 10px;
+    cursor: pointer;
+    border-radius: 5px;
+}
+
+.menu-item.active {
+    background-color: #007bff;
+    color: #fff;
+}
+
+/* Stile für feste Schaltflächen */
+.fixed-size-button {
+    width: 90%;
+    padding: 10px;
+    margin: 5px 0;
+    border: none;
+    background-color: #007bff;
+    color: #ffffff;
+    border-radius: 5px;
+    cursor: pointer;
+    text-align: left;
+}
+
+.fixed-size-button:hover {
+    background-color: #0056b3;
+}
+
+/* Stile für die Listen */
+.todo-lists {
+    padding: 10px;
+}
+
+.todo-list-button {
+    width: 100%;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px;
+    border-radius: 5px;
+    margin: 5px 0;
+    cursor: pointer;
+    text-align: left;
+}
+
+.todo-list-button:hover {
+    background-color: #0056b3;
+}
+
+/* Stile für das To-Do-Container und die Elemente */
+.todo-container {
+    max-width: 800px;
+    margin: 4rem auto;
+    background-color: #2a2a2a;
+    padding: 1rem;
+    border-radius: 8px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.todo-item {
+    background-color: #3a3a3a;
+    border: 1px solid #444;
+    padding: 1rem;
+    border-radius: 8px;
+    margin-bottom: 0.2rem;
+    color: #fff;
+}
+
+.todo-item>div {
+    margin-bottom: 0.5rem;
+}
+
+.todo-date {
+    font-weight: bold;
+    color: #bbb;
+}
+
+.todo-task {
+    font-size: 1.2em;
+    color: #ff5757;
+}
+
+.todo-description {
+    color: #bbb;
+}
+
+.delete-icon {
+    width: 5%;
+    height: 5%;
+}
+
+/* Stile für den Hinzufügen-Button */
+#addButton {
+    position: fixed;
+    bottom: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    border-radius: 50%;
+    font-size: 30px;
+    cursor: pointer;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+/* Stile für die Formulare (To-Do und Liste) */
+#newTodoForm,#newListForm {
+    display: none;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #000000;
+    color: #ffffff;
+    padding: 20px;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+    border-radius: 5px;
+    width: 400px;
+    z-index: 1000;
+}
+
+#newTodoForm input,
+#newTodoForm textarea,
+#newListForm input {
+    margin-bottom: 10px;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 5px;
+    width: 90%;
+    max-width: 360px;
+    min-width: 360px;
+}
+
+#newTodoForm button,
+#newListForm button {
+    background-color: #007bff;
+    color: #ffffff;
+    border: none;
+    padding: 10px 20px;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+#newTodoForm .cancelButton,
+#newListForm .cancelButton {
+    background-color: #ff0000;
+}
