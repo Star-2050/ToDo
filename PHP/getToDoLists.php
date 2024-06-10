@@ -70,6 +70,7 @@ function DisplayToDoLists($todoLists)
     foreach ($todoLists as $todoList)
     {
         echo '<button class="project-button" data-listid="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
+        echo '<div class="todoList-delete"> <img src="assets/icons/trash-bin.png" class="delete-icon2" data-task="' . htmlspecialchars($todoList['Task'], ENT_QUOTES, 'UTF-8') . '" style="width: 10%;" onclick="delete_todoList(\'' . htmlspecialchars($todoList['Task'], ENT_QUOTES, 'UTF-8') . '\')"></div>';
         echo '<br/>';
     }
     echo '</div>';
