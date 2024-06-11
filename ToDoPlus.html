@@ -13,6 +13,7 @@
     <script src="assets/js/todo.js"></script>
     <script src="assets/js/main.js"></script>
     <script src="assets/js/loading.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/breakpoints/1.0.0/breakpoints.min.js"></script>
 </head>
 
 <body>
@@ -38,6 +39,7 @@
                 <!-- To-Do Lists will be loaded here -->
             </div>
             <button id="addListButton">+ Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
+            <button id="shareListButton">Liste Teilen</button> <!-- Button zum Teilen einer Liste -->
         </div>
     </div>
     <h1>Aufgaben</h1>
@@ -51,7 +53,7 @@
 
             <button id="addButton">+</button>
 
-            <div id="newTodoForm" style="display: none;">
+            <div id="newTodoForm" class="form-container">
                 <h3>Neues To-Do</h3>
                 <form action="PHP/add_todo.php" method="POST" id="todoForm">
                     <input type="hidden" name="listID" value="1" />
@@ -63,13 +65,35 @@
                 </form>
             </div>
 
-            <div id="newListForm" style="display: none;"> <!-- Formular zum Hinzufügen einer neuen Liste -->
+            <div id="newListForm" class="form-container">
                 <h3>Neue Liste</h3>
                 <form action="PHP/add_list.php" method="POST" id="listForm">
                     <input type="text" name="listName" id="newListName" placeholder="Listenname" required />
                     <button type="submit">Hinzufügen</button>
                     <button type="button" id="cancelListButton" class="cancelButton">Abbrechen</button>
                 </form>
+            </div>
+
+            <!-- Share List Form -->
+            <div id="shareListForm" class="form-container">
+                <h3>Liste Teilen</h3>
+                <form action="PHP/send_share_request.php" method="POST" id="shareForm">
+                    <select name="listID" id="shareListID" required>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                    <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Email oder Username"
+                        required />
+                    <button type="submit">Teilen</button>
+                    <button type="button" id="cancelShareButton" class="cancelButton">Abbrechen</button>
+                </form>
+            </div>
+
+            <!-- Pending Requests -->
+            <div id="pendingRequests" class="form-container">
+                <h3>Ausstehende Anfragen</h3>
+                <div id="requests-container">
+                    <!-- Pending requests will be loaded here -->
+                </div>
             </div>
         </section>
     </div>

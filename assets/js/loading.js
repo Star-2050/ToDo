@@ -1,4 +1,3 @@
-//Oliver
 $(document).ready(function () {
     var currentListID = 3; // Default list ID
 
@@ -151,19 +150,7 @@ $(document).ready(function () {
     });
 
     $('#cancelDeleteAccount').click(function () {
-        // Execute delete_user.php on cancel
-        $.ajax({
-            url: "PHP/delete_user.php",
-            method: "POST",
-            success: function (data) {
-                console.log("Account deletion cancelled:", data);
-                modal.hide();
-            },
-            error: function (xhr, status, error) {
-                console.error("Error cancelling account deletion:", xhr.responseText);
-                alert("An error occurred while cancelling the account deletion.");
-            }
-        });
+        modal.hide();
     });
 
     $('#confirmDeleteAccount').click(function () {
@@ -193,4 +180,64 @@ $(document).ready(function () {
     $('#logout').click(function () {
         window.location.href = 'PHP/logout.php';
     });
+
+    // Load lists into the share form dropdown
+    function loadLists() {
+        $.get('PHP/get_lists.php', function (data) {
+            var lists = JSON.parse(data);
+            $('#shareListID').empty();
+            lists.forEach(function (list) {
+                $('#shareListID').append(`<option value="${list.ListID}">${list.ListName}</option>`);
+            });
+        });
+    }
+
+    // Show the share list form
+    $('#shareListButton').click(function () {
+        $('#newListForm').hide();
+        $('#shareListForm').show();
+        loadLists();
+    });
+
+    // Cancel sharing
+    $('#cancelShareButton').click(function () {
+        $('#shareListForm').hide();
+    });
+
+    // Load pending share requests
+    function loadRequests() {
+        $.get('PHP/get_share_requests.php', function (data) {
+            var requests = JSON.parse(data);
+            $('#requests-container').empty();
+            requests.forEach(function (request) {
+                $('#requests-container').append(`
+                    <div>
+                        <p>Anfrage von ${request.requesterUsername} für Liste: ${request.listName}</p>
+                        <button class="accept-request" data-id="${request.requestID}">Akzeptieren</button>
+                        <button class="reject-request" data-id="${request.requestID}">Ablehnen</button>
+                    </div>
+                `);
+            });
+        });
+    }
+
+    // Handle request actions
+    $(document).on('click', '.accept-request', function () {
+        var requestID = $(this).data('id');
+        $.post('PHP/handle_share_request.php', { requestID: requestID, action: 'accept' }, function (response) {
+            alert(response);
+            loadRequests();
+        });
+    });
+
+    $(document).on('click', '.reject-request', function () {
+        var requestID = $(this).data('id');
+        $.post('PHP/handle_share_request.php', { requestID: requestID, action: 'reject' }, function (response) {
+            alert(response);
+            loadRequests();
+        });
+    });
+
+    // Initial load
+    loadRequests();
 });
