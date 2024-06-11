@@ -1,4 +1,3 @@
-
 /* Allgemeine Stile für Menüpunkte */
 .menu-item {
     padding: 10px;
@@ -110,8 +109,10 @@
     justify-content: center;
 }
 
-/* Stile für die Formulare (To-Do und Liste) */
-#newTodoForm,#newListForm {
+/* Stile für die Formulare (To-Do, Liste, Teilen) */
+#newTodoForm,
+#newListForm,
+#shareListForm {
     display: none;
     position: fixed;
     top: 50%;
@@ -128,7 +129,9 @@
 
 #newTodoForm input,
 #newTodoForm textarea,
-#newListForm input {
+#newListForm input,
+#shareListForm input,
+#shareListForm select {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -139,7 +142,8 @@
 }
 
 #newTodoForm button,
-#newListForm button {
+#newListForm button,
+#shareListForm button {
     background-color: #007bff;
     color: #ffffff;
     border: none;
@@ -150,6 +154,9 @@
 }
 
 #newTodoForm .cancelButton,
-#newListForm .cancelButton {
+#newListForm .cancelButton,
+#shareListForm .cancelButton {
     background-color: #ff0000;
 }
+
+/* Weitere Stile für spezifische Elemente */
