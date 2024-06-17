@@ -13,9 +13,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $listID = $_SESSION['listID'];  // Pull listID from session
     $filter = isset($_SESSION['todoFilter']) ? $_SESSION['todoFilter'] : 3; // Default filter
 
-    // Get todos based on the filter
-    $todos = GetToDosFromUserList($userID, $listID, $filter);
-    DisplayToDos($todos);
+    // Get todos and list name based on the filter
+    $listData = GetToDosFromUserList($userID, $listID, $filter);
+    DisplayToDos($listData['todos'], $listData['listName']);
 }
 
 function Connect()
@@ -36,8 +36,9 @@ function Connect()
 function GetToDosFromUserList($userID, $listID, $filter)
 {
     $connection = Connect();
-    $sql = "SELECT td.Datum, td.Task, td.Beschreibung FROM ToDos td 
+    $sql = "SELECT td.Datum, td.Task, td.Beschreibung, tl.ListName FROM ToDos td 
             INNER JOIN UserToDoLists utl ON td.ListID = utl.ListID 
+            INNER JOIN ToDoLists tl ON td.ListID = tl.ListID
             WHERE utl.UserID = ? AND td.ListID = ?";
 
     // Apply filters
@@ -47,7 +48,7 @@ function GetToDosFromUserList($userID, $listID, $filter)
     }
     elseif ($filter == 2)
     {
-        $sql .= " AND DATE(td.Datum) = CURDATE() AND DATE(td.Datum) <= DATE_ADD(CURDATE(), INTERVAL 7 DAY)"; // Filter for tasks in the next 7 days
+        $sql .= " AND DATE(td.Datum) BETWEEN CURDATE() AND DATE_ADD(CURDATE(), INTERVAL 7 DAY)"; // Filter for tasks in the next 7 days
     }
 
     $stmt = $connection->prepare($sql);
@@ -69,18 +70,22 @@ function GetToDosFromUserList($userID, $listID, $filter)
     }
 
     $todos = [];
+    $listName = '';
     while ($row = $result->fetch_assoc())
     {
         $todos[] = $row;
+        $listName = $row['ListName']; // Get the list name from the result
     }
 
     $stmt->close();
     $connection->close();
-    return $todos;
+
+    return ['todos' => $todos, 'listName' => $listName];
 }
 
-function DisplayToDos($todos)
+function DisplayToDos($todos, $listName)
 {
+    echo '<h2> ' . htmlspecialchars($listName, ENT_QUOTES, 'UTF-8') . '</h2>';
     foreach ($todos as $todo)
     {
         echo '<div class="todo-item">';
