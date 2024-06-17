@@ -97,6 +97,7 @@ $(document).ready(function () {
 
     $('#btnUpcoming').click(function () {
         setFilter(2);
+        onsole.log("Demnächst");
     });
 
     $('#btnAll').click(function () {
