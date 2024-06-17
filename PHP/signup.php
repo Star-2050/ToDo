@@ -1,6 +1,8 @@
 <?php
-// Oliver
+session_start();
 include 'functions.php';
+
+$response = [];
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -17,32 +19,37 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             // Add new user to the database
             UserAdd($username, $password1, $email);
-            header('Location: ../ToDoPlus.html');
-            exit();
+            $response['success'] = true;
         }
         else
         {
-            header('Location: ../Sign-up.html');
-            exit();
+            $response['success'] = false;
+            $response['message'] = 'Username already exists.';
         }
     }
     else
     {
-        header('Location: ../Sign-up.html');
-        exit();
-        // echo "Passwörter stimmen nicht überein"; // Diese Zeile entfernt, weil header() verwendet wird.
+        $response['success'] = false;
+        $response['message'] = 'Passwords do not match.';
     }
 }
+else
+{
+    $response['success'] = false;
+    $response['message'] = 'Invalid request method.';
+}
+
+
 
 function Connect()
 {
-    // Datenbankverbindungseinstellungen
+    // Database connection settings
     $hostname = '89.58.47.144';
     $username = 'ToDoPlusUser';
     $password = 'todopluspw';
     $dbname = 'dbToDoPlus';
 
-    // Verbindungsaufbau
+    // Establishing connection
     $connection = mysqli_connect($hostname, $username, $password, $dbname);
     if (!$connection)
     {
@@ -52,10 +59,10 @@ function Connect()
 }
 
 /**
- * Überprüft, ob ein Benutzername in der Datenbank existiert.
+ * Check if a username already exists in the database.
  * 
- * @param string $username Der zu überprüfende Benutzername.
- * @return bool Wahr, wenn der Benutzername existiert, sonst falsch.
+ * @param string $username The username to check.
+ * @return bool True if the username exists, otherwise false.
  */
 function UsernameExist($username)
 {
@@ -71,16 +78,16 @@ function UsernameExist($username)
 }
 
 /**
- * Fügt einen neuen Benutzer in die Datenbank ein.
+ * Add a new user to the database.
  * 
- * @param string $username Der Benutzername des neuen Benutzers.
- * @param string $password Das Passwort des neuen Benutzers.
- * @param string $email Die E-Mail des neuen Benutzers.
+ * @param string $username The username of the new user.
+ * @param string $password The password of the new user.
+ * @param string $email The email of the new user.
  */
 function UserAdd($username, $password, $email)
 {
     $connection = Connect();
-    // Passwort wird gehasht, um es sicher in der Datenbank zu speichern.
+    // Hash the password to store it securely in the database.
     $hashedPassword = password_hash($password, PASSWORD_DEFAULT);
     $stmt = mysqli_prepare($connection, "INSERT INTO Users (Username, Password, Email) VALUES (?, ?, ?)");
     mysqli_stmt_bind_param($stmt, 'sss', $username, $hashedPassword, $email);
