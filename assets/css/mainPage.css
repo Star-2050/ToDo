@@ -1,33 +1,40 @@
     /* Basic Styling for the whole page */
-    body, html {
+    body,
+    html {
         margin: 0;
         padding: 0;
-        font-family: Arial, sans-serif; /* Default font family */
-        background-color: #808080; /* Set the background color to gray */
+        font-family: Arial, sans-serif;
+        /* Default font family */
+        background-color: #808080;
+        /* Set the background color to gray */
     }
-    
 
-    
 
-    /* Styling for the sidebar 
+
+
+    /* Styling for the sidebar */
     .sidebar {
-        background-color: #111;
-
+        background-color: #2c2b2b;
+        /* Dark background */
         color: white;
-
+        /* White text color */
         height: 100%;
-
+        /* Full viewport height */
         width: 13%;
+        /* Significantly reduced width */
         position: fixed;
+        /* Fixed position */
+        top: 0;
+        /* Start from the top */
         padding: 15px 5px;
+        /* Reduced padding for smaller sidebar */
     }
 
     /* Styling for the main content area */
     .content {
-        margin-left: 70px;
-        /* Adjusted space for the smaller sidebar */
+        margin-left: 13%;
         padding: 20px;
-        /* Padding inside the content area */
+
     }
 
 
@@ -91,18 +98,19 @@
     .menu-item {
         margin: 10px 0;
         /* Space between menu items */
-        background-color: #111;
+        background-color: #2d2c2c51;
         /* Dark background for menu items */
         color: white;
         /* White text color */
         padding: 10px;
         text-align: center;
+        width: 90%;
         /* Centered text for smaller sidebar */
     }
 
     /* Hover effect for menu items */
     .menu-item:hover {
-        background-color: #ddd;
+        background-color: #dddddd8f;
         /* Light background on hover */
         color: black;
         /* Black text color */
@@ -164,4 +172,36 @@
     .no-select {
         user-select: none;
         /* Disable text selection */
+    }
+
+    /* Styles for add and share buttons */
+    #addListButton,
+    #shareListButton {
+        background-color: #2d2c2c51;
+        /* Dark background */
+        color: white;
+        /* White text color */
+        padding: 10px;
+        border: 1px solid black;
+        /* Black border */
+        border-radius: 5px;
+        /* Rounded corners */
+        cursor: pointer;
+        text-align: center;
+        width: 90%;
+        margin: 10px 0;
+        /* Space between buttons */
+        transition: background-color 0.3s, color 0.3s;
+        /* Smooth transition */
+        box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5);
+        /* Box shadow */
+    }
+
+    /* Hover effect for buttons */
+    #addListButton:hover,
+    #shareListButton:hover {
+        background-color: #dddddd8f;
+        /* Light background on hover */
+        color: black;
+        /* Black text color on hover */
     }
