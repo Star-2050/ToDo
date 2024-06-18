@@ -78,9 +78,7 @@
             <div id="shareListForm" class="form-container">
                 <h3>Liste Teilen</h3>
                 <form action="PHP/send_share_request.php" method="POST" id="shareForm">
-                    <select name="listID" id="shareListID" required>
-                        <!-- Options will be populated dynamically -->
-                    </select>
+                    <input type="text" name="listName" id="listName" placeholder="Name of the List you want to share" />
                     <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Email oder Username"
                         required />
                     <button type="submit">Teilen</button>
