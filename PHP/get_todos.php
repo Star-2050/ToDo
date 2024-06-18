@@ -92,7 +92,7 @@ function DisplayToDos($todos, $listName)
         echo '<div class="todo-task">' . htmlspecialchars($todo['Task'], ENT_QUOTES, 'UTF-8') . '</div>';
         echo '<div class="todo-description">' . htmlspecialchars($todo['Beschreibung'], ENT_QUOTES, 'UTF-8') . '</div>';
         echo '<div class="todo-date">' . htmlspecialchars($todo['Datum'], ENT_QUOTES, 'UTF-8') . '</div>';
-        echo '<div class="todo-delete"> <img src="assets/icons/trash-bin.png" class="delete-icon" data-task="' . htmlspecialchars($todo['Task'], ENT_QUOTES, 'UTF-8') . '" style="width: 3%;" onclick="deleteTodo(\'' . htmlspecialchars($todo['Task'], ENT_QUOTES, 'UTF-8') . '\')"></div>';
+        echo '<div class="todo-delete"> <img src="assets/icons/trash-bin.png" class="delete-icon" data-task="' . htmlspecialchars($todo['Task'], ENT_QUOTES, 'UTF-8') . '" style="width: 2%;" onclick="deleteTodo(\'' . htmlspecialchars($todo['Task'], ENT_QUOTES, 'UTF-8') . '\')"></div>';
         echo '</div>';
     }
 }
