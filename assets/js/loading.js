@@ -222,6 +222,7 @@ $(document).ready(function () {
         });
     }
 
+
     // Handle request actions
     $(document).on('click', '.accept-request', function () {
         var requestID = $(this).data('id');

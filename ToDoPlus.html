@@ -18,11 +18,16 @@
 
 <body>
     <div class="header">
-        <div class="dropdown">
-            <button class="dropbtn">&#9881;</button>
-            <div class="dropdown-content">
-                <a href="#" id="logout">Ausloggen</a>
-                <a href="#" id="deleteAccount">Account löschen</a>
+        <div class="right-header">
+            <div class="dropdown">
+                <button class="dropbtn">&#9881;</button>
+                <div class="dropdown-content">
+                    <a href="#" id="logout">Ausloggen</a>
+                    <a href="#" id="deleteAccount">Account löschen</a>
+                </div>
+            </div>
+            <div class="requests-container" id="requests-container">
+                <!-- Pending requests will be loaded here -->
             </div>
         </div>
     </div>
@@ -42,7 +47,7 @@
             <button id="shareListButton">Liste Teilen</button> <!-- Button zum Teilen einer Liste -->
         </div>
     </div>
-    <h1>Aufgaben</h1>
+
     <div id="page-wrapper">
         <section id="main">
             <div class="content">
@@ -86,14 +91,6 @@
                     <button type="submit">Teilen</button>
                     <button type="button" id="cancelShareButton" class="cancelButton">Abbrechen</button>
                 </form>
-            </div>
-
-            <!-- Pending Requests -->
-            <div id="pendingRequests" class="form-container">
-                <h3>Ausstehende Anfragen</h3>
-                <div id="requests-container">
-                    <!-- Pending requests will be loaded here -->
-                </div>
             </div>
         </section>
     </div>

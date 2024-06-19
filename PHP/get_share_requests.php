@@ -17,14 +17,14 @@ function Connect()
 }
 
 // Ensure the user is logged in
-if (!isset($_SESSION['user_id']))
+if (!isset($_SESSION['userID']))
 {
     http_response_code(401); // Unauthorized
     echo json_encode(['error' => 'User not logged in']);
     exit();
 }
 
-$user_id = $_SESSION['user_id'];
+$user_id = $_SESSION['userID'];
 
 $conn = Connect();
 

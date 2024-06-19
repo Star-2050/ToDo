@@ -1,12 +1,28 @@
 <?php
 session_start();
-require 'db_connection.php';
+
+function Connect()
+{
+    $hostname = '89.58.47.144';
+    $username = 'ToDoPlusUser';
+    $password = 'todopluspw';
+    $dbname = 'dbToDoPlus';
+
+    $connection = mysqli_connect($hostname, $username, $password, $dbname);
+    if (!$connection)
+    {
+        die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
+    }
+    return $connection;
+}
+
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $list_id = $_POST['listID'];
+    $conn = Connect();
+    $list_id = $_SESSION['listID'];
     $username_or_email = $_POST['usernameOrEmail'];
-    $requester_id = $_SESSION['user_id'];
+    $requester_id = $_SESSION['userID'];
 
     // Get the user ID of the user to share with
     $sql = "SELECT UserID FROM Users WHERE Username = ? OR Email = ?";
