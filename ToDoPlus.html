@@ -12,6 +12,7 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/todo.js"></script>
     <script src="assets/js/loading.js"></script>
+    <script src="assets/js/sharing.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/breakpoints/1.0.0/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
 </head>
@@ -40,6 +41,13 @@
             </div>
             <button id="addListButton">Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
             <button id="shareListButton">Liste Teilen</button> <!-- Button zum Teilen einer Liste -->
+        </div>
+        <!-- Pending Requests -->
+        <div id="pendingRequests" class="form-container">
+            <h3>Ausstehende Anfragen :</h3>
+            <div id="requests-container">
+                <!-- Pending requests will be loaded here -->
+            </div>
         </div>
     </div>
     <h1>Aufgaben</h1>
@@ -88,13 +96,7 @@
                 </form>
             </div>
 
-            <!-- Pending Requests -->
-            <div id="pendingRequests" class="form-container">
-                <h3>Ausstehende Anfragen</h3>
-                <div id="requests-container">
-                    <!-- Pending requests will be loaded here -->
-                </div>
-            </div>
+
         </section>
     </div>
 
