@@ -35,38 +35,59 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
             {
                 // Get the details of the share request
                 $sql = "SELECT ListID, RequestedUserID FROM ShareRequests WHERE RequestID = ?";
-                $stmt = $conn->prepare($sql);
-                if ($stmt)
+                $stmt2 = $conn->prepare($sql);
+                if ($stmt2)
                 {
-                    $stmt->bind_param("i", $request_id);
-                    $stmt->execute();
-                    $result = $stmt->get_result();
+                    $stmt2->bind_param("i", $request_id);
+                    $stmt2->execute();
+                    $result = $stmt2->get_result();
                     if ($result && $result->num_rows === 1)
                     {
                         $request = $result->fetch_assoc();
                         $list_id = $request['ListID'];
                         $user_id = $request['RequestedUserID'];
-                        $stmt->close();
+                        $stmt2->close();
 
-                        // Add the user to the UserToDoLists table
-                        $sql = "INSERT INTO UserToDoLists (ListID, UserID) VALUES (?, ?)";
-                        $stmt = $conn->prepare($sql);
-                        if ($stmt)
+                        // Check if the user already has access to the list
+                        $sql = "SELECT * FROM UserToDoLists WHERE ListID = ? AND UserID = ?";
+                        $stmt3 = $conn->prepare($sql);
+                        if ($stmt3)
                         {
-                            $stmt->bind_param("ii", $list_id, $user_id);
-                            if ($stmt->execute())
+                            $stmt3->bind_param("ii", $list_id, $user_id);
+                            $stmt3->execute();
+                            $result = $stmt3->get_result();
+                            if ($result->num_rows === 0)
                             {
-                                echo "Anfrage erfolgreich akzeptiert!";
+                                // Add the user to the UserToDoLists table
+                                $sql = "INSERT INTO UserToDoLists (ListID, UserID) VALUES (?, ?)";
+                                $stmt4 = $conn->prepare($sql);
+                                if ($stmt4)
+                                {
+                                    $stmt4->bind_param("ii", $list_id, $user_id);
+                                    if ($stmt4->execute())
+                                    {
+                                        echo "Anfrage erfolgreich akzeptiert!";
+                                    }
+                                    else
+                                    {
+                                        echo "Fehler beim Hinzufügen des Benutzers zur Liste.";
+                                    }
+                                    $stmt4->close();
+                                }
+                                else
+                                {
+                                    echo "Fehler beim Vorbereiten der SQL-Anweisung für das Hinzufügen.";
+                                }
                             }
                             else
                             {
-                                echo "Fehler beim Hinzufügen des Benutzers zur Liste.";
+                                echo "Der Benutzer hat bereits Zugriff auf diese Liste.";
                             }
-                            $stmt->close();
+                            $stmt3->close();
                         }
                         else
                         {
-                            echo "Fehler beim Vorbereiten der SQL-Anweisung für das Hinzufügen.";
+                            echo "Fehler beim Überprüfen der bestehenden Zuordnung.";
                         }
                     }
                     else
