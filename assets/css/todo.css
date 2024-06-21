@@ -162,4 +162,42 @@
     background-color: #ff0000;
 }
 
-/* Weitere Stile für spezifische Elemente */
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+}
+
+.right-header {
+    display: flex;
+    align-items: center;
+}
+
+.requests-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.requests-container div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.requests-container p {
+    margin: 0;
+    padding-right: 10px;
+}
+
+.requests-container button {
+    margin-right: 5px;
+}
