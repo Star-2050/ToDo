@@ -37,7 +37,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $requested_user_id = $requested_user['UserID'];
 
         // Insert the share request record
-        $sql = "INSERT INTO ShareRequests (RequesterID, RequestedUserID, ListID) VALUES (?, ?, ?)";
+        $sql = "INSERT INTO ShareRequests (RequesterID, RequestedUserID, ListID, Status) VALUES (?, ?, ?, 'pending')";
         $stmt = $conn->prepare($sql);
         $stmt->bind_param("iii", $requester_id, $requested_user_id, $list_id);
         if ($stmt->execute())
@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         {
             echo "Fehler beim Senden der Anfrage.";
         }
+        $stmt->close();
     }
     else
     {

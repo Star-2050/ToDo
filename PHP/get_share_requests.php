@@ -16,11 +16,10 @@ function Connect()
     return $connection;
 }
 
-// Ensure the user is logged in
 if (!isset($_SESSION['userID']))
 {
-    http_response_code(401); // Unauthorized
-    echo json_encode(['error' => 'User not logged in']);
+    http_response_code(401);
+    echo "User not logged in";
     exit();
 }
 
@@ -30,16 +29,18 @@ $conn = Connect();
 
 $sql = "
     SELECT 
-        tdl.ListID, 
-        tdl.ListName 
+        sr.RequestID,
+        sr.ListID,
+        tdl.ListName,
+        u.Username AS RequesterUsername
     FROM 
-        ToDoLists tdl
+        ShareRequests sr
     INNER JOIN 
-        UserToDoLists utdl 
-    ON 
-        tdl.ListID = utdl.ListID 
+        ToDoLists tdl ON sr.ListID = tdl.ListID
+    INNER JOIN 
+        Users u ON sr.RequesterID = u.UserID
     WHERE 
-        utdl.UserID = ?
+        sr.RequestedUserID = ? AND sr.Status = 'pending'
 ";
 
 if ($stmt = $conn->prepare($sql))
@@ -48,17 +49,21 @@ if ($stmt = $conn->prepare($sql))
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $lists = $result->fetch_all(MYSQLI_ASSOC);
-
-    header('Content-Type: application/json');
-    echo json_encode($lists);
+    while ($row = $result->fetch_assoc())
+    {
+        echo '<div class="request">';
+        echo '<p>Request from ' . htmlspecialchars($row['RequesterUsername'], ENT_QUOTES, 'UTF-8') . ' to share list "' . htmlspecialchars($row['ListName'], ENT_QUOTES, 'UTF-8') . '"</p>';
+        echo '<button class="accept-request" data-id="' . htmlspecialchars($row['RequestID'], ENT_QUOTES, 'UTF-8') . '">Accept</button>';
+        echo '<button class="reject-request" data-id="' . htmlspecialchars($row['RequestID'], ENT_QUOTES, 'UTF-8') . '">Reject</button>';
+        echo '</div>';
+    }
 
     $stmt->close();
 }
 else
 {
-    http_response_code(500); // Internal Server Error
-    echo json_encode(['error' => 'Failed to prepare SQL statement']);
+    http_response_code(500);
+    echo "Failed to prepare SQL statement";
 }
 
 $conn->close();
