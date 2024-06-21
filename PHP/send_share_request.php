@@ -1,18 +1,28 @@
 <?php
 session_start();
-include "functions.php";
 
-
-if ($conn->connect_error)
+function Connect()
 {
-    die("Connection failed: " . $conn->connect_error);
+    $hostname = '89.58.47.144';
+    $username = 'ToDoPlusUser';
+    $password = 'todopluspw';
+    $dbname = 'dbToDoPlus';
+
+    $connection = new mysqli($hostname, $username, $password, $dbname);
+    if ($connection->connect_error)
+    {
+        die("Verbindung fehlgeschlagen: " . $connection->connect_error);
+    }
+    return $connection;
 }
+
+$conn = Connect();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $listName = $_POST['listName'];
+    $list_id = $_POST['listID'];
     $username_or_email = $_POST['usernameOrEmail'];
-    $requester_id = $_SESSION['userID'];
+    $requester_id = $_SESSION['userID']; // Use 'userID' to match your other scripts
 
     // Get the user ID of the user to share with
     $sql = "SELECT UserID FROM Users WHERE Username = ? OR Email = ?";
@@ -26,42 +36,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         $requested_user = $result->fetch_assoc();
         $requested_user_id = $requested_user['UserID'];
 
-        // Get the ListID of the list with the given listName
-        $sql = "SELECT ListID FROM ToDoLists WHERE ListName = ? AND UserID = ?";
+        // Insert the share request record
+        $sql = "INSERT INTO ShareRequests (RequesterID, RequestedUserID, ListID) VALUES (?, ?, ?)";
         $stmt = $conn->prepare($sql);
-        $stmt->bind_param("si", $listName, $requester_id);
-        $stmt->execute();
-        $result = $stmt->get_result();
-
-        if ($result->num_rows === 1)
+        $stmt->bind_param("iii", $requester_id, $requested_user_id, $list_id);
+        if ($stmt->execute())
         {
-            $list = $result->fetch_assoc();
-            $list_id = $list['ListID'];
-
-            // Insert the share request record
-            $sql = "INSERT INTO ShareRequests (RequesterID, RequestedUserID, ListID) VALUES (?, ?, ?)";
-            $stmt = $conn->prepare($sql);
-            $stmt->bind_param("iii", $requester_id, $requested_user_id, $list_id);
-            if ($stmt->execute())
-            {
-                echo "Anfrage erfolgreich gesendet!";
-            }
-            else
-            {
-                echo "Fehler beim Senden der Anfrage.";
-            }
+            echo "Anfrage erfolgreich gesendet!";
         }
         else
         {
-            echo "Liste nicht gefunden!";
+            echo "Fehler beim Senden der Anfrage.";
         }
     }
     else
     {
         echo "Benutzer nicht gefunden!";
     }
-
-    // Close the statement and the database connection
-    $stmt->close();
-    $conn->close();
 }
+else
+{
+    echo "Ungültige Anforderung.";
+}
+
+$conn->close();
