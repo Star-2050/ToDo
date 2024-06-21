@@ -6,13 +6,15 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>ToDoPlus</title>
     <link rel="icon" href="images/logo.png" type="image/png">
-    <link rel="stylesheet" href="assets/css/mainPage.css">
     <link rel="stylesheet" href="assets/css/todo.css" />
     <link rel="stylesheet" href="assets/css/dropdown.css" />
+    <link rel="stylesheet" href="assets/css/mainPage.css">
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/todo.js"></script>
-    <script src="assets/js/main.js"></script>
     <script src="assets/js/loading.js"></script>
+    <script src="assets/js/sharing.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/breakpoints/1.0.0/breakpoints.min.js"></script>
+    <script src="assets/js/main.js"></script>
 </head>
 
 <body>
@@ -27,17 +29,25 @@
     </div>
 
     <div class="sidebar">
-        <ul class="menu">
-            <li><button class="menu-item btn-bd-primary" id="btnToday">Heute</button></li>
-            <li><button class="menu-item btn-bd-primary" id="btnUpcoming">Demnächst</button></li>
-            <li><button class="menu-item btn-bd-primary" id="btnAll">Alle</button></li>
-        </ul>
+        <ol class="menu">
+            <button class="menu-item btn-bd-primary" id="btnToday">Heute</button><br>
+            <button class="menu-item btn-bd-primary" id="btnUpcoming">Demnächst</button><br>
+            <button class="menu-item btn-bd-primary" id="btnAll">Alle</button>
+        </ol>
         <div class="projects">
             <h3>&nbsp;Meine Projekte</h3>
             <div id="todoList-container">
                 <!-- To-Do Lists will be loaded here -->
             </div>
-            <button class="menu-item btn-bd-primary" id="addListButton">+ Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
+            <button id="addListButton">Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
+            <button id="shareListButton">Liste Teilen</button> <!-- Button zum Teilen einer Liste -->
+        </div>
+        <!-- Pending Requests -->
+        <div id="pendingRequests" class="form-container">
+            <h3>Ausstehende Anfragen :</h3>
+            <div id="requests-container">
+                <!-- Pending requests will be loaded here -->
+            </div>
         </div>
     </div>
     <h1>Aufgaben</h1>
@@ -49,28 +59,44 @@
                 </div>
             </div>
 
-            <button class="menu-item btn-bd-primary" id="addButton">+</button>
+            <button id="addButton">+</button>
 
-            <div id="newTodoForm" style="display: none;">
+            <div id="newTodoForm" class="form-container">
                 <h3>Neues To-Do</h3>
                 <form action="PHP/add_todo.php" method="POST" id="todoForm">
                     <input type="hidden" name="listID" value="1" />
                     <input type="text" name="title" id="newTodoTitle" placeholder="Titel" required />
                     <textarea name="description" id="newTodoDescription" placeholder="Beschreibung" required></textarea>
                     <input type="date" name="date" id="newTodoDate" placeholder="Datum" required />
-                    <button class="menu-item btn-bd-primary" type="submit">Hinzufügen</button>
-                    <button class="menu-item btn-bd-primary cancelButton" type="button" id="cancelButton">Abbrechen</button>
+                    <button type="submit">Hinzufügen</button>
+                    <button type="button" id="cancelButton" class="cancelButton">Abbrechen</button>
                 </form>
             </div>
 
-            <div id="newListForm" style="display: none;"> <!-- Formular zum Hinzufügen einer neuen Liste -->
+            <div id="newListForm" class="form-container">
                 <h3>Neue Liste</h3>
                 <form action="PHP/add_list.php" method="POST" id="listForm">
                     <input type="text" name="listName" id="newListName" placeholder="Listenname" required />
-                    <button class="menu-item btn-bd-primary" type="submit">Hinzufügen</button>
-                    <button class="menu-item btn-bd-primary cancelButton" type="button">Abbrechen</button>
+                    <button type="submit">Hinzufügen</button>
+                    <button type="button" id="cancelListButton" class="cancelButton">Abbrechen</button>
                 </form>
             </div>
+
+            <!-- Share List Form -->
+            <div id="shareListForm" class="form-container">
+                <h3>Liste Teilen</h3>
+                <form action="PHP/send_share_request.php" method="POST" id="shareForm">
+                    <select name="listID" id="shareListID" required>
+                        <!-- Options will be populated dynamically -->
+                    </select>
+                    <input type="text" name="usernameOrEmail" id="usernameOrEmail" placeholder="Email oder Username"
+                        required />
+                    <button type="submit">Teilen</button>
+                    <button type="button" id="cancelShareButton" class="cancelButton">Abbrechen</button>
+                </form>
+            </div>
+
+
         </section>
     </div>
 
@@ -79,8 +105,8 @@
         <div class="modal-content">
             <span class="close">&times;</span>
             <p>Möchten Sie wirklich Ihren Account löschen?</p>
-            <button class="menu-item btn-bd-primary" id="confirmDeleteAccount">Account löschen</button>
-            <button class="menu-item btn-bd-primary" id="cancelDeleteAccount">Abbrechen</button>
+            <button id="confirmDeleteAccount">Account löschen</button>
+            <button id="cancelDeleteAccount">Abbrechen</button>
         </div>
     </div>
 </body>

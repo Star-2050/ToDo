@@ -1,4 +1,3 @@
-//Oliver
 $(document).ready(function () {
     var currentListID = 3; // Default list ID
 
@@ -98,6 +97,7 @@ $(document).ready(function () {
 
     $('#btnUpcoming').click(function () {
         setFilter(2);
+        console.log("Demnächst");
     });
 
     $('#btnAll').click(function () {
@@ -151,19 +151,7 @@ $(document).ready(function () {
     });
 
     $('#cancelDeleteAccount').click(function () {
-        // Execute delete_user.php on cancel
-        $.ajax({
-            url: "PHP/delete_user.php",
-            method: "POST",
-            success: function (data) {
-                console.log("Account deletion cancelled:", data);
-                modal.hide();
-            },
-            error: function (xhr, status, error) {
-                console.error("Error cancelling account deletion:", xhr.responseText);
-                alert("An error occurred while cancelling the account deletion.");
-            }
-        });
+        modal.hide();
     });
 
     $('#confirmDeleteAccount').click(function () {
@@ -193,4 +181,6 @@ $(document).ready(function () {
     $('#logout').click(function () {
         window.location.href = 'PHP/logout.php';
     });
+
+    
 });

@@ -1,4 +1,3 @@
-
 /* Allgemeine Stile für Menüpunkte */
 .menu-item {
     padding: 10px;
@@ -53,7 +52,7 @@
 .todo-container {
     max-width: 800px;
     margin: 4rem auto;
-    background-color: #2a2a2a;
+    background-color: #1f1f1fd1;
     padding: 1rem;
     border-radius: 8px;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -91,6 +90,9 @@
     height: 5%;
 }
 
+
+
+
 /* Stile für den Hinzufügen-Button */
 #addButton {
     position: fixed;
@@ -110,8 +112,10 @@
     justify-content: center;
 }
 
-/* Stile für die Formulare (To-Do und Liste) */
-#newTodoForm,#newListForm {
+/* Stile für die Formulare (To-Do, Liste, Teilen) */
+#newTodoForm,
+#newListForm,
+#shareListForm {
     display: none;
     position: fixed;
     top: 50%;
@@ -128,7 +132,9 @@
 
 #newTodoForm input,
 #newTodoForm textarea,
-#newListForm input {
+#newListForm input,
+#shareListForm input,
+#shareListForm select {
     margin-bottom: 10px;
     padding: 10px;
     border: 1px solid #ddd;
@@ -139,7 +145,8 @@
 }
 
 #newTodoForm button,
-#newListForm button {
+#newListForm button,
+#shareListForm button {
     background-color: #007bff;
     color: #ffffff;
     border: none;
@@ -150,6 +157,47 @@
 }
 
 #newTodoForm .cancelButton,
-#newListForm .cancelButton {
+#newListForm .cancelButton,
+#shareListForm .cancelButton {
     background-color: #ff0000;
+}
+
+
+.header {
+    display: flex;
+    justify-content: flex-end;
+    align-items: center;
+    padding: 10px;
+    background-color: #333;
+    color: #fff;
+}
+
+.right-header {
+    display: flex;
+    align-items: center;
+}
+
+.requests-container {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    background-color: #444;
+    padding: 10px;
+    border-radius: 5px;
+    margin-left: 20px;
+}
+
+.requests-container div {
+    display: flex;
+    align-items: center;
+    margin-bottom: 5px;
+}
+
+.requests-container p {
+    margin: 0;
+    padding-right: 10px;
+}
+
+.requests-container button {
+    margin-right: 5px;
 }

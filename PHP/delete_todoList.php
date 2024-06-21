@@ -1,6 +1,7 @@
 <?php
 session_start();
-//Oliver
+// Oliver
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (!isset($_SESSION['userID']))
@@ -12,16 +13,25 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     $userID = $_SESSION['userID'];
     $listID = $_POST['listID'];
 
-    if (deleteTodoListAndItems($userID, $listID))
+    // Füge eine Debugging-Ausgabe hinzu
+    error_log("UserID: $userID, ListID: $listID");
+
+    if (removeUserFromTodoList($userID, $listID))
     {
-        echo json_encode(['status' => 'success', 'message' => 'ToDo list and related items deleted successfully.']);
+        header('Location: ../ToDoPlus.html');
+        exit();
     }
     else
     {
-        echo json_encode(['status' => 'error', 'message' => 'Failed to delete ToDo list and related items.']);
+        echo "Failed to remove user from ToDo list.";
     }
 }
 
+/**
+ * Stellt eine Verbindung zur Datenbank her.
+ *
+ * @return mysqli Die Datenbankverbindung.
+ */
 function Connect()
 {
     $hostname = '89.58.47.144';
@@ -37,7 +47,14 @@ function Connect()
     return $connection;
 }
 
-function deleteTodoListAndItems($userID, $listID)
+/**
+ * Entfernt die Zuordnung eines Benutzers von einer ToDo-Liste.
+ *
+ * @param int $userID Die Benutzer-ID.
+ * @param int $listID Die Listen-ID.
+ * @return bool Wahr, wenn die Entfernung erfolgreich war, sonst falsch.
+ */
+function removeUserFromTodoList($userID, $listID)
 {
     $connection = Connect();
 
@@ -62,45 +79,17 @@ function deleteTodoListAndItems($userID, $listID)
         }
         $stmt->close();
 
-        // Delete todos related to the list
-        $sql = "DELETE FROM ToDos WHERE ListID = ?";
+        // Remove the user-list association
+        $sql = "DELETE FROM UserToDoLists WHERE UserID = ? AND ListID = ?";
         $stmt = $connection->prepare($sql);
         if (!$stmt)
         {
             throw new Exception("Prepare failed: (" . $connection->errno . ") " . $connection->error);
         }
-        $stmt->bind_param("i", $listID);
+        $stmt->bind_param("ii", $userID, $listID);
         if (!$stmt->execute())
         {
-            throw new Exception("Execution failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-        $stmt->close();
-
-        // Delete the list
-        $sql = "DELETE FROM ToDoLists WHERE ListID = ?";
-        $stmt = $connection->prepare($sql);
-        if (!$stmt)
-        {
-            throw new Exception("Prepare failed: (" . $connection->errno . ") " . $connection->error);
-        }
-        $stmt->bind_param("i", $listID);
-        if (!$stmt->execute())
-        {
-            throw new Exception("Execution failed: (" . $stmt->errno . ") " . $stmt->error);
-        }
-        $stmt->close();
-
-        // Delete the list association
-        $sql = "DELETE FROM UserToDoLists WHERE ListID = ?";
-        $stmt = $connection->prepare($sql);
-        if (!$stmt)
-        {
-            throw new Exception("Prepare failed: (" . $connection->errno . ") " . $connection->error);
-        }
-        $stmt->bind_param("i", $listID);
-        if (!$stmt->execute())
-        {
-            throw new Exception("Execution failed: (" . $stmt->errno . ") " . $stmt->error);
+            throw new Exception("Execution failed while deleting UserToDoLists: (" . $stmt->errno . ") " . $stmt->error);
         }
         $stmt->close();
 
@@ -116,6 +105,7 @@ function deleteTodoListAndItems($userID, $listID)
         $connection->rollback();
         $connection->close();
         error_log($e->getMessage());
+        echo "Error: " . $e->getMessage(); // Diese Zeile zeigt die Fehlermeldung direkt an
         return false;
     }
 }

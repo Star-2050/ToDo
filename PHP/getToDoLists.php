@@ -1,6 +1,6 @@
 <?php
 session_start();
-//Oliver
+
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
     if (!isset($_SESSION['userID']))
@@ -10,7 +10,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     }
 
     $userID = $_SESSION['userID'];
-
     $todoLists = GetToDoLists($userID);
     DisplayToDoLists($todoLists);
 }
@@ -69,8 +68,22 @@ function DisplayToDoLists($todoLists)
     echo '<div class="todo-lists">';
     foreach ($todoLists as $todoList)
     {
-        echo '<button class="menu-item btn-bd-primary" data-listid="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
-        echo '<br/>';
+        echo '<div style="display: flex; align-items: center; margin: 10px 0;">';
+
+        // Form for setting the list ID
+        echo '<form action="PHP/setListID.php" method="post" style="flex: 1; margin: 0;">';
+        echo '<input type="hidden" name="listID" value="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">';
+        echo '<button type="submit" class="todo-list-button" style="background-color: #2d2c2c51; color: white; padding: 10px; border: 1px solid black; border-radius: 5px; cursor: pointer; text-align: center; width: 100%; transition: background-color 0.3s, color 0.3s; box-shadow: 2px 2px 5px rgba(0, 0, 0, 0.5); margin: 10px 0;" onmouseover="this.style.backgroundColor=\'#dddddd8f\'; this.style.color=\'black\';" onmouseout="this.style.backgroundColor=\'#2d2c2c51\'; this.style.color=\'white\';">' . htmlspecialchars($todoList['ListName'], ENT_QUOTES, 'UTF-8') . '</button>';
+        echo '</form>';
+
+        // Form for deleting the to-do list
+        echo '<form action="PHP/delete_todoList.php" method="post" style="display: inline-block; margin-left: 10px;">';
+        echo '<input type="hidden" name="listID" value="' . htmlspecialchars($todoList['ListID'], ENT_QUOTES, 'UTF-8') . '">';
+        echo '<button type="submit" style="background: none; border: none; cursor: pointer;">';
+        echo '<img src="assets/icons/trash-bin.png" style="width: 20px;"></button>';
+        echo '</form>';
+
+        echo '</div>';
     }
     echo '</div>';
 }

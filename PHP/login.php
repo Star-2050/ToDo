@@ -2,15 +2,6 @@
 // Oliver
 session_start();
 
-include 'functions.php';
-
-// Überprüfen, ob der Benutzer bereits angemeldet ist
-if (isset($_SESSION['userID']))
-{
-    // Benutzer ist bereits angemeldet, weiterleiten zur ToDoPlus-Seite
-    header('Location: ../ToDoPlus.html');
-    exit();
-}
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -117,4 +108,18 @@ function GetDefaultListID($userID)
     mysqli_close($connection);
 
     return $listID;
+}
+function Connect()
+{
+    $hostname = '89.58.47.144';
+    $username = 'ToDoPlusUser';
+    $password = 'todopluspw';
+    $dbname = 'dbToDoPlus';
+
+    $connection = mysqli_connect($hostname, $username, $password, $dbname);
+    if (!$connection)
+    {
+        die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
+    }
+    return $connection;
 }
