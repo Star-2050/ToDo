@@ -97,7 +97,7 @@ $(document).ready(function () {
 
     $('#btnUpcoming').click(function () {
         setFilter(2);
-        onsole.log("Demnächst");
+        console.log("Demnächst");
     });
 
     $('#btnAll').click(function () {
@@ -182,64 +182,5 @@ $(document).ready(function () {
         window.location.href = 'PHP/logout.php';
     });
 
-    // Load lists into the share form dropdown
-    function loadLists() {
-        $.get('PHP/get_lists.php', function (data) {
-            var lists = JSON.parse(data);
-            $('#shareListID').empty();
-            lists.forEach(function (list) {
-                $('#shareListID').append(`<option value="${list.ListID}">${list.ListName}</option>`);
-            });
-        });
-    }
-
-    // Show the share list form
-    $('#shareListButton').click(function () {
-        $('#newListForm').hide();
-        $('#shareListForm').show();
-        loadLists();
-    });
-
-    // Cancel sharing
-    $('#cancelShareButton').click(function () {
-        $('#shareListForm').hide();
-    });
-
-    // Load pending share requests
-    function loadRequests() {
-        $.get('PHP/get_share_requests.php', function (data) {
-            var requests = JSON.parse(data);
-            $('#requests-container').empty();
-            requests.forEach(function (request) {
-                $('#requests-container').append(`
-                    <div>
-                        <p>Anfrage von ${request.requesterUsername} für Liste: ${request.listName}</p>
-                        <button class="accept-request" data-id="${request.requestID}">Akzeptieren</button>
-                        <button class="reject-request" data-id="${request.requestID}">Ablehnen</button>
-                    </div>
-                `);
-            });
-        });
-    }
-
-
-    // Handle request actions
-    $(document).on('click', '.accept-request', function () {
-        var requestID = $(this).data('id');
-        $.post('PHP/handle_share_request.php', { requestID: requestID, action: 'accept' }, function (response) {
-            alert(response);
-            loadRequests();
-        });
-    });
-
-    $(document).on('click', '.reject-request', function () {
-        var requestID = $(this).data('id');
-        $.post('PHP/handle_share_request.php', { requestID: requestID, action: 'reject' }, function (response) {
-            alert(response);
-            loadRequests();
-        });
-    });
-
-    // Initial load
-    loadRequests();
+    
 });

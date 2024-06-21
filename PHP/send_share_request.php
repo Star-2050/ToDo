@@ -8,21 +8,21 @@ function Connect()
     $password = 'todopluspw';
     $dbname = 'dbToDoPlus';
 
-    $connection = mysqli_connect($hostname, $username, $password, $dbname);
-    if (!$connection)
+    $connection = new mysqli($hostname, $username, $password, $dbname);
+    if ($connection->connect_error)
     {
-        die("Verbindung fehlgeschlagen: " . mysqli_connect_error());
+        die("Verbindung fehlgeschlagen: " . $connection->connect_error);
     }
     return $connection;
 }
 
+$conn = Connect();
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST')
 {
-    $conn = Connect();
-    $list_id = $_SESSION['listID'];
+    $list_id = $_POST['listID'];
     $username_or_email = $_POST['usernameOrEmail'];
-    $requester_id = $_SESSION['userID'];
+    $requester_id = $_SESSION['userID']; // Use 'userID' to match your other scripts
 
     // Get the user ID of the user to share with
     $sql = "SELECT UserID FROM Users WHERE Username = ? OR Email = ?";
@@ -54,3 +54,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST')
         echo "Benutzer nicht gefunden!";
     }
 }
+else
+{
+    echo "Ungültige Anforderung.";
+}
+
+$conn->close();

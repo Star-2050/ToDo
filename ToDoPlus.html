@@ -12,22 +12,18 @@
     <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     <script src="assets/js/todo.js"></script>
     <script src="assets/js/loading.js"></script>
+    <script src="assets/js/sharing.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/breakpoints/1.0.0/breakpoints.min.js"></script>
     <script src="assets/js/main.js"></script>
 </head>
 
 <body>
     <div class="header">
-        <div class="right-header">
-            <div class="dropdown">
-                <button class="dropbtn">&#9881;</button>
-                <div class="dropdown-content">
-                    <a href="#" id="logout">Ausloggen</a>
-                    <a href="#" id="deleteAccount">Account löschen</a>
-                </div>
-            </div>
-            <div class="requests-container" id="requests-container">
-                <!-- Pending requests will be loaded here -->
+        <div class="dropdown">
+            <button class="dropbtn">&#9881;</button>
+            <div class="dropdown-content">
+                <a href="#" id="logout">Ausloggen</a>
+                <a href="#" id="deleteAccount">Account löschen</a>
             </div>
         </div>
     </div>
@@ -46,8 +42,15 @@
             <button id="addListButton">Neue Liste</button> <!-- Button zum Hinzufügen einer neuen Liste -->
             <button id="shareListButton">Liste Teilen</button> <!-- Button zum Teilen einer Liste -->
         </div>
+        <!-- Pending Requests -->
+        <div id="pendingRequests" class="form-container">
+            <h3>Ausstehende Anfragen :</h3>
+            <div id="requests-container">
+                <!-- Pending requests will be loaded here -->
+            </div>
+        </div>
     </div>
-
+    <h1>Aufgaben</h1>
     <div id="page-wrapper">
         <section id="main">
             <div class="content">
@@ -92,6 +95,8 @@
                     <button type="button" id="cancelShareButton" class="cancelButton">Abbrechen</button>
                 </form>
             </div>
+
+
         </section>
     </div>
 

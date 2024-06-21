@@ -30,18 +30,16 @@ $conn = Connect();
 
 $sql = "
     SELECT 
-        ShareRequests.RequestID, 
-        Users.Username as requesterUsername, 
-        ToDoLists.ListName 
+        tdl.ListID, 
+        tdl.ListName 
     FROM 
-        ShareRequests 
-    JOIN 
-        Users ON ShareRequests.RequesterID = Users.UserID 
-    JOIN 
-        ToDoLists ON ShareRequests.ListID = ToDoLists.ListID 
+        ToDoLists tdl
+    INNER JOIN 
+        UserToDoLists utdl 
+    ON 
+        tdl.ListID = utdl.ListID 
     WHERE 
-        ShareRequests.RequestedUserID = ? 
-        AND ShareRequests.Status = 'pending'
+        utdl.UserID = ?
 ";
 
 if ($stmt = $conn->prepare($sql))
@@ -50,9 +48,10 @@ if ($stmt = $conn->prepare($sql))
     $stmt->execute();
     $result = $stmt->get_result();
 
-    $requests = $result->fetch_all(MYSQLI_ASSOC);
+    $lists = $result->fetch_all(MYSQLI_ASSOC);
 
-    echo json_encode($requests);
+    header('Content-Type: application/json');
+    echo json_encode($lists);
 
     $stmt->close();
 }
@@ -63,4 +62,3 @@ else
 }
 
 $conn->close();
-?>
