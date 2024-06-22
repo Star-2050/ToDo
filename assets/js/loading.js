@@ -65,6 +65,16 @@ $(document).ready(function () {
         });
     }
 
+    function loadLists() {
+        $.get('PHP/get_lists.php', function (data) {
+            $('#shareListID').empty();
+            $('#shareListID').html(data);
+        }).fail(function (xhr, status, error) {
+            console.error("Error loading lists:", xhr.responseText);
+            alert("An error occurred while loading lists.");
+        });
+    }
+
     // Event listener for delete icon
     $(document).on('click', '.delete-icon', function () {
         var task = $(this).data('task');
@@ -133,6 +143,18 @@ $(document).ready(function () {
         $('#newListForm').hide();
     });
 
+    // Show share list form
+    $('#shareListButton').click(function () {
+        $('#newListForm').hide();
+        $('#shareListForm').show();
+        loadLists(); // Load lists into the dropdown
+    });
+
+    // Hide share list form
+    $('#cancelShareButton').click(function () {
+        $('#shareListForm').hide();
+    });
+
     // Dropdown functionality
     $('.dropbtn').click(function () {
         $('.dropdown-content').toggle();
@@ -181,6 +203,4 @@ $(document).ready(function () {
     $('#logout').click(function () {
         window.location.href = 'PHP/logout.php';
     });
-
-    
 });
