@@ -226,7 +226,8 @@
 
 					// Uncomment the line below to "rewind" when this wrapper scrolls out of view.
 
-					//leave:	function(t) { $this.addClass('inactive'); },
+					//leave:	
+					function(t) { $this.addClass('inactive'); },
 
 				});
 

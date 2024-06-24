@@ -1,4 +1,5 @@
 <?php
+//Oliver
 session_start();
 
 if (isset($_SESSION['userID']))

@@ -1,3 +1,5 @@
+/*Oliver*/ 
+
 function loadRequests() {
     $.get('PHP/get_share_requests.php', function (data) {
         $('#requests-container').empty();
