@@ -24,24 +24,6 @@
 
 					<!-- WIRD WARSCHEINLICH NICHT BENUTZT -->
 
-					<li>
-						<a href="#">Layouts</a>
-						<ul>
-							<li><a href="left-sidebar.html">Left Sidebar</a></li>
-							<li><a href="right-sidebar.html">Right Sidebar</a></li>
-							<li><a href="no-sidebar.html">No Sidebar</a></li>
-							<li>
-								<a href="#">Submenu</a>
-								<ul>
-									<li><a href="#">Option 1</a></li>
-									<li><a href="#">Option 2</a></li>
-									<li><a href="#">Option 3</a></li>
-									<li><a href="#">Option 4</a></li>
-								</ul>
-							</li>
-						</ul>
-					</li>
-					<li><a href="elements.html">Elements</a></li>
 					<li><a href="PHP/check_login.php" class="button primary">Log In</a></li>
 					<li><a href="Sign-up.html" class="button primary">Sign Up</a></li>
 				</ul>
@@ -56,29 +38,33 @@
 					<p>Willkommen<br />
 						Finden sie heraus was wir mit unserer Website machen</p>
 				</header>
-				<span class="image"><img src="images/pic01.png" alt="" /></span>
+				<span class="image"><img src="images/logo.png" alt="" /></span>
 			</div>
 			<a href="#one" class="goto-next scrolly">Next</a>
 		</section>
 
 		<!-- Erste -->
 		<section id="one" class="spotlight style1 bottom">
-			<span class="image fit main"><img src="images/pic02.jpg" alt="" /></span>
-			<div class="content">
+			<div class="content" style="display: flex; align-items: center;">
+				<span class="image fit main"
+					style="flex-shrink: 0; width: 20%; padding-top: 20%; position: relative; overflow: hidden; border-radius: 50%; margin-right: 20px;">
+					<img src="images/image.png" alt=""
+						style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+				</span>
 				<div class="container">
 					<div class="row">
 						<div class="col-4 col-12-medium">
 							<header>
 								<h2>Listen erstellen und bestimmen</h2>
-								<p>Für euch im alltag</p>
+								<p>Für euch im Alltag</p>
 							</header>
 						</div>
 						<div class="col-4 col-12-medium">
-							<p>Sie verhält sich alles für euch, sie hilft euch wenn ihr vergässlich seid.
-								Sie ist die Kreation die euer Leben verändern wird. </p>
+							<p>Sie verhält sich alles für euch, sie hilft euch, wenn ihr vergesslich seid.
+								Sie ist die Kreation, die euer Leben verändern wird.</p>
 						</div>
 						<div class="col-4 col-12-medium">
-							<p>Schreibt euch ein und seid nie wieder die Person die es vergessen hat.</p>
+							<p>Schreibt euch ein und seid nie wieder die Person, die es vergessen hat.</p>
 						</div>
 					</div>
 				</div>
@@ -88,25 +74,31 @@
 
 		<!-- Zweite -->
 		<section id="two" class="spotlight style2 right">
-			<span class="image fit main"><img src="images/pic03.jpg" alt="" /></span>
-			<div class="content">
-				<header>
-					<h2>Teilen und zusammen verhalten</h2>
-					<p>Listen mit Freunden teilen</p>
-				</header>
-				<p>Alles wird online gespeichert und eure Freunde können es auch sehen.
-					Für gruppenarbeiten oder einfache errinerungen unter Familie.
-				</p>
-				<ul class="actions">
-					<li><a href="#" class="button">Learn More</a></li>
-				</ul>
+			<div class="content" style="display: flex; align-items: center;">
+				<span class="image fit main"
+					style="flex-shrink: 0; width: 20%; padding-top: 20%; position: relative; overflow: hidden; border-radius: 50%; margin-right: 20px;">
+					<img src="images/2.png" alt=""
+						style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover; border-radius: 50%;" />
+				</span>
+				<div>
+					<header>
+						<h2>Teilen und zusammen verhalten</h2>
+						<p>Listen mit Freunden teilen</p>
+					</header>
+					<p>Alles wird online gespeichert und eure Freunde können es auch sehen.
+						Für Gruppenarbeiten oder einfache Erinnerungen unter Familie.
+					</p>
+					<ul class="actions">
+						<li><a href="Sign-up.html" class="button primary">Sign Up</a></li>
+					</ul>
+				</div>
 			</div>
 			<a href="#three" class="goto-next scrolly">Next</a>
 		</section>
 
 		<!-- Dritte -->
 		<section id="three" class="spotlight style3 left">
-			<span class="image fit main bottom"><img src="images/pic04.jpg" alt="" /></span>
+			<span class="image fit main right"><img src="images/updatePic.png" alt="" /></span>
 			<div class="content">
 				<header>
 					<h2>Regelmässige verbesserungen</h2>
@@ -128,87 +120,48 @@
 		<section id="four" class="wrapper style1 special fade-up">
 			<div class="container">
 				<header class="major">
-					<h2>Zussamengefasst</h2>
-					<p>Unsere website wird euch in all diesen Domenen helfen</p>
+					<h2>Created by</h2>
 				</header>
 				<div class="box alt">
 					<div class="row gtr-uniform">
 						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-chart-area"></span>
-							<h3>Ipsum sed commodo</h3>
-							<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+							<span class="image"
+								style="display: block; width: 100%; padding-top: 100%; position: relative; border-radius: 50%; overflow: hidden;">
+								<img src="images/adminO.jpg" alt=""
+									style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" />
+							</span>
+							<h3>Sitz Oliver</h3>
 						</section>
 						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-comment"></span>
-							<h3>Eleifend lorem ornare</h3>
-							<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
+							<span class="image"
+								style="display: block; width: 100%; padding-top: 100%; position: relative; border-radius: 50%; overflow: hidden;">
+								<img src="images/adminS.jpg" alt=""
+									style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" />
+							</span>
+							<h3>Detzel Sven</h3>
 						</section>
 						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-flask"></span>
-							<h3>Cubilia cep lobortis</h3>
-							<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-						</section>
-						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-paper-plane"></span>
-							<h3>Errinert andere</h3>
-							<p>Schnelles und einfaches teilen von Listen.</p>
-						</section>
-						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-file"></span>
-							<h3>Odio laoreet accumsan</h3>
-							<p>Feugiat accumsan lorem eu ac lorem amet accumsan donec. Blandit orci porttitor.</p>
-						</section>
-						<section class="col-4 col-6-medium col-12-xsmall">
-							<span class="icon solid alt major fa-lock"></span>
-							<h3>Seid versichert</h3>
-							<p>Persönlicher code und sicherungen vor Listendiebe.</p>
+							<span class="image"
+								style="display: block; width: 100%; padding-top: 100%; position: relative; border-radius: 50%; overflow: hidden;">
+								<img src="images/adminA.png" alt=""
+									style="position: absolute; top: 0; left: 0; width: 100%; height: 100%; object-fit: cover;" />
+							</span>
+							<h3>Lader Alessandro</h3>
 						</section>
 					</div>
+
 				</div>
-				<footer class="major">
-					<ul class="actions special">
-						<li><a href="#" class="button">Werdet entlastet</a></li>
-					</ul>
-				</footer>
-			</div>
-		</section>
 
-		<!-- Five -->
-		<section id="five" class="wrapper style2 special fade">
-			<div class="container">
-				<header>
-					<h2>Seid ihr dabei??</h2>
-					<p>Schreibt euch ein</p>
-				</header>
-				<form method="get" action="Sign-up.html">
-					<!--<form method="post" action="#" class="cta">
-						<div class="row gtr-uniform gtr-50">
-							<div class="col-8 col-12-xsmall"><input type="email" name="email" id="email"
-									placeholder="Eure Email Addresse" /></div>
-							<div class="col-4 col-12-xsmall"><input type="submit" value="Sign Up" class="fit primary" />
-							</div>
-						</div>
-					</form>-->
-					<a href="Sign-up.html" class="button primary">Sign Up</a>
-				</form>
-			</div>
-		</section>
 
-		<!-- Footer -->
-		<footer id="footer">
-			<ul class="icons">
-				<li><a href="#" class="icon brands alt fa-twitter"><span class="label">Twitter</span></a></li>
-				<li><a href="#" class="icon brands alt fa-facebook-f"><span class="label">Facebook</span></a></li>
-				<li><a href="#" class="icon brands alt fa-linkedin-in"><span class="label">LinkedIn</span></a></li>
-				<li><a href="#" class="icon brands alt fa-instagram"><span class="label">Instagram</span></a></li>
-				<li><a href="#" class="icon brands alt fa-github"><span class="label">GitHub</span></a></li>
-				<li><a href="#" class="icon solid alt fa-envelope"><span class="label">Email</span></a></li>
-			</ul>
-			<ul class="copyright">
-				<li>&copy; Untitled. All rights reserved.</li>
-				<li>Designhilfe: <a href="http://html5up.net"> HTML5 UP </a></li>
-			</ul>
-		</footer>
+			</div>
+			<footer class="major">
+				<ul class="actions special">
+					<li><a href="#" class="button">Home</a></li>
+				</ul>
+			</footer>
+	</div>
+	</section>
+
 	</div>
 
 	<!-- Scripts -->
