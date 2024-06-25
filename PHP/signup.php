@@ -29,7 +29,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
     {
         header('Location: ../Sign-up.html');
         exit();
-        // echo "Passwörter stimmen nicht überein"; // Diese Zeile entfernt, weil header() verwendet wird.
     }
 }
 
