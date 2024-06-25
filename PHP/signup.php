@@ -1,5 +1,6 @@
 <?php
 // Oliver
+session_start();
 
 if ($_SERVER["REQUEST_METHOD"] == "POST")
 {
@@ -16,6 +17,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST")
         {
             // Add new user to the database
             UserAdd($username, $password1, $email);
+            $_SESSION['userID'] = GetUserID($email);
+            $_SESSION['listID'] = GetDefaultListID($_SESSION['userID']); // Falls es eine Standardliste gibt
+            $_SESSION['todoFilter'] = 1;
             header('Location: ../ToDoPlus.html');
             exit();
         }
@@ -86,4 +90,55 @@ function UserAdd($username, $password, $email)
     mysqli_stmt_execute($stmt);
     mysqli_stmt_close($stmt);
     mysqli_close($connection);
+}
+/**
+ * Holt die Benutzer-ID basierend auf Benutzername oder E-Mail.
+ * 
+ * @param string $usernameOrEmail Der Benutzername oder die E-Mail-Adresse des Benutzers.
+ * @return int Die Benutzer-ID.
+ */
+function GetUserID($usernameOrEmail)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "SELECT UserID FROM Users WHERE Username = ? OR Email = ?");
+    mysqli_stmt_bind_param($stmt, 'ss', $usernameOrEmail, $usernameOrEmail);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $userID = null;
+    if ($row = mysqli_fetch_assoc($result))
+    {
+        $userID = $row['UserID'];
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $userID;
+}
+
+/**
+ * Holt die Standard-Listen-ID für einen Benutzer.
+ * 
+ * @param int $userID Die Benutzer-ID.
+ * @return int Die Listen-ID.
+ */
+function GetDefaultListID($userID)
+{
+    $connection = Connect();
+    $stmt = mysqli_prepare($connection, "SELECT ListID FROM UserToDoLists WHERE UserID = ? LIMIT 1");
+    mysqli_stmt_bind_param($stmt, 'i', $userID);
+    mysqli_stmt_execute($stmt);
+    $result = mysqli_stmt_get_result($stmt);
+
+    $listID = null;
+    if ($row = mysqli_fetch_assoc($result))
+    {
+        $listID = $row['ListID'];
+    }
+
+    mysqli_stmt_close($stmt);
+    mysqli_close($connection);
+
+    return $listID;
 }
